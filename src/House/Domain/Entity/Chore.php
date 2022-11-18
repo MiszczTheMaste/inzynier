@@ -8,6 +8,7 @@ use App\Core\Domain\Entity\AbstractEntity;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
 use App\House\Domain\ValueObject\DaysInterval;
+use function Symfony\Component\Translation\t;
 
 final class Chore extends AbstractEntity
 {
@@ -21,6 +22,7 @@ final class Chore extends AbstractEntity
 
     private ChoreFulfilmentCollection $choreFulfilmentCollection;
 
+    private bool $removed;
     /**
      * @param IdInterface $id
      * @param IdInterface $roomId
@@ -123,5 +125,10 @@ final class Chore extends AbstractEntity
     public function getChoreFulfilmentCollection(): ChoreFulfilmentCollection
     {
         return $this->choreFulfilmentCollection;
+    }
+
+    public function remove(): void
+    {
+        $this->removed = true;
     }
 }

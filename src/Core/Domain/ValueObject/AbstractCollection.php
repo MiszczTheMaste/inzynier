@@ -25,18 +25,6 @@ abstract class AbstractCollection implements CollectionInterface
         $this->collection = $collection;
     }
 
-    /**
-     * @throws ItemNotFoundInCollectionException
-     */
-    public function getItem(mixed $key): mixed
-    {
-        if (false === array_key_exists($key, $this->getCollection())) {
-            throw new ItemNotFoundInCollectionException();
-        }
-
-        return $this->getCollection()[$key];
-    }
-
     public function collectionHasKey(string $key): bool
     {
         return array_key_exists($key, $this->getCollection());

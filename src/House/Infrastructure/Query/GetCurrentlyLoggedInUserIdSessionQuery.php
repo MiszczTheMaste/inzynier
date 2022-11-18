@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\House\Infrastructure\Query;
 
 use App\Core\Domain\Exception\DatabaseException;
-use App\House\Application\Query\GetUserIdQueryInterface;
+use App\House\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class GetUserIdSessionQuery implements GetUserIdQueryInterface
+final class GetCurrentlyLoggedInUserIdSessionQuery implements GetCurrentlyLoggedInUserIdQueryInterface
 {
     private RequestStack $requestStack;
 

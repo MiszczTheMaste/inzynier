@@ -6,7 +6,7 @@ namespace App\House\Application\Query;
 
 use App\Core\Domain\Exception\DatabaseException;
 
-interface GetUserIdQueryInterface
+interface GetCurrentlyLoggedInUserIdQueryInterface
 {
     /**
      * @return string

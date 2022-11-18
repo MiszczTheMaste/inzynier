@@ -33,9 +33,11 @@ final class CreateRoomService implements CreateRoomServiceInterface
             Uuid::fromString($request->getData()['icon_id'])
         );
 
+        $this->repository->persist($house);
+
         return new UseCasePayload(
-            HttpCodes::STATUS_TEXT[HttpCodes::HTTP_OK],
-            HttpCodes::HTTP_OK
+            HttpCodes::STATUS_TEXT[HttpCodes::HTTP_CREATED],
+            HttpCodes::HTTP_CREATED
         );
     }
 

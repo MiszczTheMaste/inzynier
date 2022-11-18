@@ -15,7 +15,7 @@ final class Room extends AbstractEntity
 
     private IdInterface $iconId;
 
-    private ChoreCollection $roomCollection;
+    private ChoreCollection $choreCollection;
 
     private DateTimeImmutable $creationDate;
 
@@ -24,15 +24,15 @@ final class Room extends AbstractEntity
     /**
      * @param string $name
      * @param IdInterface $iconId
-     * @param ChoreCollection $roomCollection
+     * @param ChoreCollection $choreCollection
      * @param DateTimeImmutable $creationDate
      * @param bool $removed
      */
-    public function __construct(string $name, IdInterface $iconId, ChoreCollection $roomCollection, DateTimeImmutable $creationDate, bool $removed)
+    public function __construct(string $name, IdInterface $iconId, ChoreCollection $choreCollection, DateTimeImmutable $creationDate, bool $removed)
     {
         $this->name = $name;
         $this->iconId = $iconId;
-        $this->roomCollection = $roomCollection;
+        $this->choreCollection = $choreCollection;
         $this->creationDate = $creationDate;
         $this->removed = $removed;
     }
@@ -57,10 +57,12 @@ final class Room extends AbstractEntity
     /**
      * @return ChoreCollection
      */
-    public function getRoomCollection(): ChoreCollection
+    public function getChoreCollection(): ChoreCollection
     {
-        return $this->roomCollection;
+        return $this->choreCollection;
     }
+
+
 
     /**
      * @return DateTimeImmutable
@@ -81,5 +83,10 @@ final class Room extends AbstractEntity
     public function remove():void
     {
         $this->removed = true;
+    }
+
+    public function removeChore(IdInterface $id): void
+    {
+        $this->choreCollection->get($id)->remove();
     }
 }

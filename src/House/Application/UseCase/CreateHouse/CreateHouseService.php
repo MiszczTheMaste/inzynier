@@ -9,7 +9,7 @@ use App\Core\Application\UseCase\UseCasePayload;
 use App\Core\Domain\Exception\DatabaseException;
 use App\Core\Domain\Exception\InvalidInputDataException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
-use App\House\Application\Query\GetUserIdQueryInterface;
+use App\House\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\House\Domain\Entity\House;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 use App\House\Domain\ValueObject\RoomCollection;
@@ -19,15 +19,15 @@ final class CreateHouseService implements CreateHouseServiceInterface
 {
     private HouseRepositoryInterface $repository;
 
-    private GetUserIdQueryInterface $getUserIdQuery;
+    private GetCurrentlyLoggedInUserIdQueryInterface $getUserIdQuery;
 
     /**
      * @param HouseRepositoryInterface $repository
-     * @param GetUserIdQueryInterface $getUserIdQuery
+     * @param GetCurrentlyLoggedInUserIdQueryInterface $getUserIdQuery
      */
     public function __construct(
         HouseRepositoryInterface $repository,
-        GetUserIdQueryInterface $getUserIdQuery
+        GetCurrentlyLoggedInUserIdQueryInterface $getUserIdQuery
     )
     {
         $this->repository = $repository;
@@ -54,8 +54,8 @@ final class CreateHouseService implements CreateHouseServiceInterface
         $this->repository->persist($house);
 
         return new UseCasePayload(
-            HttpCodes::STATUS_TEXT[HttpCodes::HTTP_OK],
-            HttpCodes::HTTP_OK
+            HttpCodes::STATUS_TEXT[HttpCodes::HTTP_CREATED],
+            HttpCodes::HTTP_CREATED
         );
     }
 

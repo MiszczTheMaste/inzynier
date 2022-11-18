@@ -9,4 +9,6 @@ interface IdInterface
     public static function fromString(string $identifier): self;
 
     public function toString(): string;
+
+    public function equals(IdInterface $id): bool;
 }

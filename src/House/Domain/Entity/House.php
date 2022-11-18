@@ -8,6 +8,7 @@ use App\Core\Domain\Entity\AbstractAggregate;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Event\ChoreCreatedEvent;
+use App\House\Domain\Event\ChoreRemovedEvent;
 use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
@@ -131,9 +132,17 @@ final class House extends AbstractAggregate
         $this->raise(new RoomRemovedEvent($this->getId()));
     }
 
+    public function removeChore(IdInterface $roomId, IdInterface $choreId): void
+    {
+        $room = $this->getRoom($roomId);
+        $room->removeChore($choreId);
+
+        $this->raise(new ChoreRemovedEvent($choreId));
+    }
+
     public function getRoom(IdInterface $id): Room
     {
-        return $this->roomCollection->getItem($id->toString());
+        return $this->roomCollection->get($id);
     }
 
     public function getUsers(): UserIdCollection
