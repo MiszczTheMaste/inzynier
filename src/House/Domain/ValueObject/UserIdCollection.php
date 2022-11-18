@@ -7,7 +7,7 @@ namespace App\House\Domain\ValueObject;
 use App\Core\Domain\ValueObject\AbstractCollection;
 use App\Core\Domain\ValueObject\IdInterface;
 
-final class UserIdCollection  extends AbstractCollection
+final class UserIdCollection extends AbstractCollection
 {
     /**
      * @return IdInterface[]

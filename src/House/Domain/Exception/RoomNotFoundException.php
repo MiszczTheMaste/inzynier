@@ -8,5 +8,4 @@ use App\Core\Domain\Exception\AbstractException;
 
 final class RoomNotFoundException extends AbstractException
 {
-
 }

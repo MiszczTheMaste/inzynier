@@ -24,9 +24,8 @@ final class ChoreCollection extends AbstractCollection
      */
     public function get(IdInterface $id): Chore
     {
-        foreach ($this->getCollection() as $chore){
-            if($chore->getId()->equals($id))
-            {
+        foreach ($this->getCollection() as $chore) {
+            if ($chore->getId()->equals($id)) {
                 return $chore;
             }
         }

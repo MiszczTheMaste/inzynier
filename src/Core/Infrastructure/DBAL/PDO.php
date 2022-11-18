@@ -25,9 +25,9 @@ final class PDO implements DatabaseAbstractionLayerInterface
         string $name,
         string $user,
         string $password
-    )
-    {
-        $connectionString = sprintf("mysql:host=%s;port=%d;dbname=%s;user=%s;password=%s",
+    ) {
+        $connectionString = sprintf(
+            "mysql:host=%s;port=%d;dbname=%s;user=%s;password=%s",
             $host,
             $port,
             $name,

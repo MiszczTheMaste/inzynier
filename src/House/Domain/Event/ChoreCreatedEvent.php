@@ -38,8 +38,7 @@ final class ChoreCreatedEvent implements EventInterface
         IdInterface $userId,
         IdInterface $fulfilmentId,
         DateTimeImmutable $fulfilmentDeadline
-    )
-    {
+    ) {
         $this->roomId = $roomId;
         $this->daysInterval = $daysInterval;
         $this->iconId = $iconId;

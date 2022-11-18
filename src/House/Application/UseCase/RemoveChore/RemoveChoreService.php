@@ -22,9 +22,10 @@ final class RemoveChoreService implements RemoveChoreServiceInterface
     }
 
 
-    public function handle(RemoveChoreRequest $request): UseCasePayload{
+    public function handle(RemoveChoreRequest $request): UseCasePayload
+    {
         $house = $this->repository->get(Uuid::fromString($request->getHouseId()));
-        $house->removeChore(Uuid::fromString($request->getRoomId()),Uuid::fromString($request->getChoreId()));
+        $house->removeChore(Uuid::fromString($request->getRoomId()), Uuid::fromString($request->getChoreId()));
         $this->repository->persist($house);
 
         return new UseCasePayload(

@@ -6,9 +6,9 @@ namespace App\Auth\Application\UseCase\Login;
 
 final class LoginRequest
 {
-   private string $username;
+    private string $username;
 
-   private string $password;
+    private string $password;
 
     /**
      * @param string $username

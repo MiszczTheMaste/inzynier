@@ -8,6 +8,7 @@ use App\Core\Domain\Entity\AbstractEntity;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
 use App\House\Domain\ValueObject\DaysInterval;
+
 use function Symfony\Component\Translation\t;
 
 final class Chore extends AbstractEntity

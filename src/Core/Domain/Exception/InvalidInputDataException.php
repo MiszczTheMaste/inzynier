@@ -6,5 +6,4 @@ namespace App\Core\Domain\Exception;
 
 final class InvalidInputDataException extends AbstractException
 {
-
 }

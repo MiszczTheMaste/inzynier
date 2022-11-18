@@ -48,7 +48,8 @@ final class UserRepository extends AbstractEventSQLRepository implements UserRep
      */
     public function get(Username $username): User
     {
-        $result = $this->fetch('
+        $result = $this->fetch(
+            '
             SELECT 
                 id, username, password, creation_date, removed
             FROM

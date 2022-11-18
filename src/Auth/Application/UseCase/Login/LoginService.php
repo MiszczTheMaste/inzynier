@@ -35,14 +35,13 @@ final class LoginService implements LoginServiceInterface
 
         $sessionData = $this->requestStack->getSession()->get(SessionAuthService::SESSION_KEY);
 
-        if(false === is_null($sessionData)){
+        if (false === is_null($sessionData)) {
             return ['message' => 'User already logged in'];
         }
 
         $user = $this->repository->get($username);
 
-        if(false === $user->getPassword()->verify($request->getPassword()))
-        {
+        if (false === $user->getPassword()->verify($request->getPassword())) {
             throw new InvalidPasswordException();
         }
 

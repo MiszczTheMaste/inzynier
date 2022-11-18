@@ -28,8 +28,7 @@ final class ChoreFulfilment extends AbstractEntity
         DateTimeImmutable $deadline,
         bool $finished,
         Rate $rate
-    )
-    {
+    ) {
         parent::__construct($id);
         $this->deadline = $deadline;
         $this->finished = $finished;

@@ -22,7 +22,8 @@ final class RemoveHouseService implements RemoveHouseServiceInterface
     }
 
 
-    public function handle(RemoveHouseRequest $request): UseCasePayload{
+    public function handle(RemoveHouseRequest $request): UseCasePayload
+    {
         $house = $this->repository->get(Uuid::fromString($request->getHouseId()));
         $house->removeHouse();
         $this->repository->persist($house);

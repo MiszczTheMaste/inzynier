@@ -26,9 +26,8 @@ final class RoomCollection extends AbstractCollection
      */
     public function get(IdInterface $id): Room
     {
-        foreach ($this->getCollection() as $room){
-            if($room->getId()->equals($id))
-            {
+        foreach ($this->getCollection() as $room) {
+            if ($room->getId()->equals($id)) {
                 return $room;
             }
         }
@@ -36,7 +35,7 @@ final class RoomCollection extends AbstractCollection
         throw new RoomNotFoundException();
     }
 
-    public function addRoom(Room $room):void
+    public function addRoom(Room $room): void
     {
         $this->collection[] = $room;
     }

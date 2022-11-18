@@ -55,7 +55,7 @@ final class CreateChoreService implements CreateChoreServiceInterface
      */
     private function validate(array $data): void
     {
-        if(false === array_key_exists('name',$data))  {
+        if (false === array_key_exists('name', $data)) {
             throw new InvalidInputDataException();
         }
     }

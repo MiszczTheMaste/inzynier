@@ -32,13 +32,12 @@ final class House extends AbstractAggregate
     private bool $removed;
 
     public function __construct(
-        IdInterface        $id,
-        RoomCollection     $roomCollection,
-        UserIdCollection   $users,
+        IdInterface $id,
+        RoomCollection $roomCollection,
+        UserIdCollection $users,
         ?DateTimeImmutable $creationTime = null,
         bool $removed = false,
-    )
-    {
+    ) {
         parent::__construct($id);
         $this->roomCollection = $roomCollection;
         $this->users = $users;

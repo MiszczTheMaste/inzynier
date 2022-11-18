@@ -80,7 +80,7 @@ final class Room extends AbstractEntity
         return $this->removed;
     }
 
-    public function remove():void
+    public function remove(): void
     {
         $this->removed = true;
     }

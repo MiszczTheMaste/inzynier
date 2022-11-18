@@ -31,12 +31,12 @@ final class LoginAction
                 $this->service->handle(new LoginRequest($data['username'], $data['password'])),
                 Response::HTTP_CREATED
             );
-        } catch (DatabaseException $e ) {
+        } catch (DatabaseException $e) {
             return new JsonResponse(
                 ['message' => 'Error during connection.'],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-        }  catch (InvalidUsernameException $e) {
+        } catch (InvalidUsernameException $e) {
             return new JsonResponse(
                 ['message' => 'Nie poprawny login'],
                 Response::HTTP_BAD_REQUEST

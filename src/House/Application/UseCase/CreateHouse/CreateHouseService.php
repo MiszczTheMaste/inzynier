@@ -28,8 +28,7 @@ final class CreateHouseService implements CreateHouseServiceInterface
     public function __construct(
         HouseRepositoryInterface $repository,
         GetCurrentlyLoggedInUserIdQueryInterface $getUserIdQuery
-    )
-    {
+    ) {
         $this->repository = $repository;
         $this->getUserIdQuery = $getUserIdQuery;
     }
@@ -66,7 +65,7 @@ final class CreateHouseService implements CreateHouseServiceInterface
      */
     private function validate(array $data): void
     {
-        if(false === array_key_exists('name',$data))  {
+        if (false === array_key_exists('name', $data)) {
             throw new InvalidInputDataException();
         }
     }
