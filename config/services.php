@@ -19,6 +19,7 @@ use App\Front\Action\ViewCreateRoomAction;
 use App\Front\Action\ViewHomepageAction;
 use App\Front\Action\ViewHouseAction;
 use App\Front\Action\ViewPageAction;
+use App\Front\Action\ViewRoomAction;
 use App\Front\Application\UseCase\ViewAddUser\ViewAddUserService;
 use App\Front\Application\UseCase\ViewAddUser\ViewAddUserServiceInterface;
 use App\Front\Application\UseCase\ViewCreateRoom\ViewCreateRoomService;
@@ -29,15 +30,20 @@ use App\Front\Application\UseCase\ViewHouse\ViewHouseService;
 use App\Front\Application\UseCase\ViewHouse\ViewHouseServiceInterface;
 use App\Front\Application\UseCase\ViewPage\ViewPageService;
 use App\Front\Application\UseCase\ViewPage\ViewPageServiceInterface;
+use App\Front\Application\UseCase\ViewRoom\ViewRoomService;
+use App\Front\Application\UseCase\ViewRoom\ViewRoomServiceInterface;
 use App\Front\Application\View\TwigView;
 use App\House\Action\AddUserToHouse\AddUserToHouseAction;
 use App\House\Action\CreateChore\CreateChoreAction;
 use App\House\Action\CreateHouse\CreateHouseAction;
 use App\House\Action\CreateRoom\CreateRoomAction;
+use App\House\Action\GetChores\GetChoresAction;
 use App\House\Action\GetHouse\GetHouseAction;
 use App\House\Action\GetHousesForUser\GetHousesForUserAction;
 use App\House\Application\Query\GetHousesForUserQueryInterface;
+use App\House\Application\Query\GetRoomNameQueryInterface;
 use App\House\Application\Query\GetUserIdQueryInterface;
+use App\House\Application\Query\GetUsernameByIdQueryInterface;
 use App\House\Application\UseCase\AddUserToHouse\AddUserToHouseService;
 use App\House\Application\UseCase\AddUserToHouse\AddUserToHouseServiceInterface;
 use App\House\Application\UseCase\CreateChore\CreateChoreService;
@@ -46,15 +52,21 @@ use App\House\Application\UseCase\CreateHouse\CreateHouseService;
 use App\House\Application\UseCase\CreateHouse\CreateHouseServiceInterface;
 use App\House\Application\UseCase\CreateRoom\CreateRoomService;
 use App\House\Application\UseCase\CreateRoom\CreateRoomServiceInterface;
+use App\House\Application\UseCase\GetChores\GetChoresService;
+use App\House\Application\UseCase\GetChores\GetChoresServiceInterface;
+use App\House\Application\UseCase\GetChores\Query\GetChoresQueryInterface;
 use App\House\Application\UseCase\GetHouse\GetHouseService;
 use App\House\Application\UseCase\GetHouse\GetHouseServiceInterface;
 use App\House\Application\UseCase\GetHouse\Query\GetHouseQueryInterface;
 use App\House\Application\UseCase\GetHousesForUser\GetHousesForUserService;
 use App\House\Application\UseCase\GetHousesForUser\GetHousesForUserServiceInterface;
 use App\House\Domain\Repository\HouseRepositoryInterface;
+use App\House\Infrastructure\Query\GetChores\GetChoresSqlQuery;
 use App\House\Infrastructure\Query\GetHouse\GetHouseSqlQuery;
 use App\House\Infrastructure\Query\GetHousesForUser\GetHousesForUserSqlQuery;
+use App\House\Infrastructure\Query\GetRoomNameSqlQuery;
 use App\House\Infrastructure\Query\GetUserIdSqlQuery;
+use App\House\Infrastructure\Query\GetUsernameByIdQuery;
 use App\House\Infrastructure\Repository\HouseEventRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -126,6 +138,12 @@ return static function (ContainerConfigurator $configurator) {
             service(ViewCreateRoomServiceInterface::class)
         ]);
 
+    $services->set(ViewRoomAction::class)
+        ->tag('controller.service_arguments')
+        ->args([
+            service(ViewRoomServiceInterface::class)
+        ]);
+
     $services->set(ViewHomepageServiceInterface::class, ViewHomepageService::class)
         ->args([
             service(TwigView::class),
@@ -151,6 +169,12 @@ return static function (ContainerConfigurator $configurator) {
         ]);
 
     $services->set(ViewHouseServiceInterface::class, ViewHouseService::class)
+        ->args([
+            service(TwigView::class),
+            service(SymfonyInternalClient::class),
+        ]);
+
+    $services->set(ViewRoomServiceInterface::class, ViewRoomService::class)
         ->args([
             service(TwigView::class),
             service(SymfonyInternalClient::class),
@@ -202,6 +226,11 @@ return static function (ContainerConfigurator $configurator) {
             service(RequestStack::class)
         ]);
 
+    $services->set(GetUsernameByIdQueryInterface::class, GetUsernameByIdQuery::class)
+        ->args([
+            service(DatabaseAbstractionLayerInterface::class)
+        ]);
+
 
     $services->set(CreateHouseAction::class)
         ->tag('controller.service_arguments')
@@ -247,7 +276,8 @@ return static function (ContainerConfigurator $configurator) {
     $services->set(GetHousesForUserServiceInterface::class, GetHousesForUserService::class)
         ->args([
             service(GetCurrentlyLoggedInUserIdQueryInterface::class),
-            service(GetHousesForUserQueryInterface::class)
+            service(GetHousesForUserQueryInterface::class),
+            service(GetUsernameByIdQueryInterface::class)
         ]);
 
     $services->set(GetHousesForUserQueryInterface::class, GetHousesForUserSqlQuery::class)
@@ -286,6 +316,29 @@ return static function (ContainerConfigurator $configurator) {
         ]);
 
     $services->set(GetUserIdQueryInterface::class, GetUserIdSqlQuery::class)
+        ->args([
+            service(DatabaseAbstractionLayerInterface::class),
+        ]);
+
+
+    $services->set(GetChoresAction::class)
+        ->tag('controller.service_arguments')
+        ->args([
+            service(GetChoresServiceInterface::class)
+        ]);
+
+    $services->set(GetChoresServiceInterface::class, GetChoresService::class)
+        ->args([
+            service(GetChoresQueryInterface::class),
+            service(GetRoomNameQueryInterface::class)
+        ]);
+
+    $services->set(GetChoresQueryInterface::class, GetChoresSqlQuery::class)
+        ->args([
+            service(DatabaseAbstractionLayerInterface::class),
+        ]);
+
+    $services->set(GetRoomNameQueryInterface::class, GetRoomNameSqlQuery::class)
         ->args([
             service(DatabaseAbstractionLayerInterface::class),
         ]);

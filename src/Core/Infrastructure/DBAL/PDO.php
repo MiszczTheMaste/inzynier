@@ -16,9 +16,6 @@ final class PDO implements DatabaseAbstractionLayerInterface
     /** @var BasePDO */
     private BasePDO $pdo;
 
-    /** @var int */
-    private int $transactionDepth;
-
     public function __construct(
         string $host,
         int $port,
@@ -37,8 +34,6 @@ final class PDO implements DatabaseAbstractionLayerInterface
 
         $this->pdo = new BasePDO($connectionString);
         $this->pdo->setAttribute(BasePDO::ATTR_AUTOCOMMIT, 0);
-
-        $this->transactionDepth = 0;
     }
 
     /**

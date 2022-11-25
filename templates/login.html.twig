@@ -7,47 +7,64 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <style>
-            html,body{
-                margin: 0;
-                background-color: #1d1c19;
-                font-family: Arial, sans-serif;
+            *{
                 box-sizing: border-box;
             }
-            main{
+            html,body{
+                margin: 0;
                 background-color: #0f0f0f;
+                color: #ffffff;
+                font-family: Arial, sans-serif;
+            }
+            main {
                 width: 100vw;
                 height: 100vh;
                 top: 0;
                 position: absolute;
-                display: flex;
-                flex-wrap: wrap;
             }
             section{
-                width: 100%;
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                flex-wrap: wrap;
+                width: 100vw;
             }
-            h1{
+            h1 {
                 color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 64px;
-                margin: 0;
+                font-size: 80px;
+                margin-top: 75px;
+                margin-bottom: 200px;
             }
-            a{
+            a {
                 display: block;
                 color: #ffffff;
                 text-decoration: none;
                 text-align: center;
                 font-size: 48px;
             }
-            label{
+            label {
                 color: #fff;
+                display: block;
+                width: 100%;
+                text-align: center;
+                font-size: 48px;
             }
-            input{
-                width: 90%;
+            section input {
+                width: 100%;
                 border: none;
+                height: 80px;
+                margin-bottom: 200px;
+                font-size: 72px;
+            }
+            .login-button{
+                background-color: #273927;
+                width: 100%;
+                height: 300px;
+                font-size: 48px;
+                color: #fff;
+                border: none;
+                position: absolute;
+                bottom: 0;
             }
         </style>
     {% endblock %}
@@ -60,18 +77,18 @@
 <body>
 {% block body %}
     <main>
-        <section>
-            <a href="/"><h1>Elemele</h1></a>
-        </section>
-        <section>
-            <form method="post" action="/api/login.form">
+        <a href="/"><h1>ElemeleApp</h1></a>
+        <form method="post" action="/api/login.form">
+            <section>
                 <label for="username">Login</label>
                 <input type="text" name="username">
+            </section>
+            <section>
                 <label for="password">Hasło</label>
                 <input type="password" name="password">
-                <input type="submit" value="Zaloguj">
-            </form>
-        </section>
+            </section>
+            <input type="submit" value="Zaloguj" class="login-button">
+        </form>
     </main>
 {% endblock %}
 </body>

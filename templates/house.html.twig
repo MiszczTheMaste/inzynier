@@ -12,11 +12,11 @@
             }
             html,body{
                 margin: 0;
-                background-color: #1d1c19;
+                background-color: #0f0f0f;
+                color: #ffffff;
                 font-family: Arial, sans-serif;
             }
             main{
-                background-color: #0f0f0f;
                 width: 100vw;
                 height: 100vh;
                 top: 0;
@@ -26,12 +26,18 @@
                 width: 100%;
             }
             h1{
-                color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 64px;
-                margin: 0;
-                width: 100vw;
+                font-size: 80px;
+                margin-top: 75px;
+            }
+            h2{
+                text-align: center;
+                font-size: 48px;
+            }
+            h3{
+                text-align: center;
+                font-size: 32px;
             }
             a{
                 color: #ffffff;
@@ -51,36 +57,102 @@
                 justify-content: center;
                 width: 50vw;
                 height: 50vw;
-                border: solid 1px #fff;
+                border: solid 2px #fff;
+            }
+            @keyframes rainbow {
+                0% {color: #ff9999}
+                10% {color: #99ff99}
+                20% {color: #9999ff}
+                30% {color: #ff9999}
+                40% {color: #fff}
+                100% {color: #fff}
+            }
+            h3 > div{
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            h3 > div > span{
+                display: block;
+                width: 100%;
+            }
+            h3 > div > span:nth-child(1){
+                animation: rainbow 2s 0.1s infinite linear;
+            }
+            h3 > div > span:nth-child(2){
+                animation: rainbow 2s 0.4s infinite linear;
+            }
+            h3 > div > span:nth-child(3){
+                animation: rainbow 2s 0.6s infinite linear;
             }
         </style>
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script>
+            function showRooms(buttonElem){
+                let elem = document.querySelector('#roomsSection');
+
+                if(elem.style.display === 'flex'){
+                    elem.style.display = 'none';
+                    buttonElem.querySelector('div').style.display = 'flex';
+                } else {
+                    elem.style.display = 'flex';
+                    buttonElem.querySelector('div').style.display = 'none';
+                }
+            }
+            function showUsers(buttonElem){
+                let elem = document.querySelector('#usersSection');
+
+                if(elem.style.display === 'flex'){
+                    elem.style.display = 'none';
+                    buttonElem.querySelector('div').style.display = 'flex';
+                } else {
+                    elem.style.display = 'flex';
+                    buttonElem.querySelector('div').style.display = 'none';
+                }
+            }
+        </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
-        <h1>{{ house.name }}</h1>
-        <section class="house-wrap">
+        <a href="/"><h1>ElemeleApp</h1></a>
+        <h2>{{ house.name }}</h2>
+        <h3 onclick="showRooms(this)">Pokoje w mieszkaniu
+            <div>
+                <span>▼</span>
+                <span>▼</span>
+                <span>▼</span>
+            </div>
+        </h3>
+        <section class="house-wrap" id="roomsSection" style="display: none">
+            {% for room in house.rooms %}
+                <a href="/houses/{{ house.id }}/rooms/{{ room.id }}">
+                    <span>{{ room.name }}</span>
+                </a>
+            {% endfor %}
+            <a href="/houses/{{ house.id }}/create-room">
+                <span>+</span>
+            </a>
+        </section>
+        <h3 onclick="showUsers(this)">Lokatorzy
+            <div>
+                <span>▼</span>
+                <span>▼</span>
+                <span>▼</span>
+            </div>
+        </h3>
+        <section class="house-wrap" id="usersSection" style="display: none">
             {% for user in house.users %}
                 <a href="#">
                     <span>{{ user.username }}</span>
                 </a>
             {% endfor %}
             <a href="/houses/{{ house.id }}/add-user">
-                <span>+</span>
-            </a>
-        </section>
-        <section class="house-wrap">
-            {% for room in house.rooms %}
-                <a href="/house/{{ house.id }}/rooms/{{ room.id }}">
-                    <span>{{ room.name }}</span>
-                </a>
-            {% endfor %}
-            <a href="/houses/{{ house.id }}/create-room">
                 <span>+</span>
             </a>
         </section>

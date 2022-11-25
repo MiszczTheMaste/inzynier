@@ -16,6 +16,6 @@ final class GetUserIdSqlQuery extends AbstractSqlQuery implements GetUserIdQuery
             [':username' => $username]
         );
 
-        return $result->getFieldValue('id');
+        return (string) $result->getFieldValue('id');
     }
 }

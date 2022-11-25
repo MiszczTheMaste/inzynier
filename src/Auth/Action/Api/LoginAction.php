@@ -50,17 +50,17 @@ final class LoginAction
             }
 
             return new RedirectResponse('/');
-        } catch (DatabaseException $e) {
+        } catch (DatabaseException) {
             return new JsonResponse(
                 ['message' => 'Error during connection.'],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-        } catch (InvalidUsernameException $e) {
+        } catch (InvalidUsernameException) {
             return new JsonResponse(
                 ['message' => 'Nie poprawny login'],
                 Response::HTTP_BAD_REQUEST
             );
-        } catch (InvalidPasswordException $e) {
+        } catch (InvalidPasswordException) {
             return new JsonResponse(
                 ['message' => 'Niewłaściwe hasło'],
                 Response::HTTP_BAD_REQUEST

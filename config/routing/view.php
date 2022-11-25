@@ -5,6 +5,7 @@ use App\Front\Action\ViewCreateRoomAction;
 use App\Front\Action\ViewHomepageAction;
 use App\Front\Action\ViewHouseAction;
 use App\Front\Action\ViewPageAction;
+use App\Front\Action\ViewRoomAction;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routes) {
@@ -29,5 +30,9 @@ return static function (RoutingConfigurator $routes) {
 
     $routes->add('view.house.create-room', '/houses/{house_id}/create-room')
         ->controller(ViewCreateRoomAction::class)
+        ->methods(['GET']);
+
+    $routes->add('view.house.room.chores', '/houses/{house_id}/rooms/{room_id}')
+        ->controller(ViewRoomAction::class)
         ->methods(['GET']);
 };

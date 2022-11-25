@@ -59,51 +59,52 @@
                 height: 50vw;
                 border: solid 2px #fff;
             }
-            @keyframes rainbow {
-                0% {color: #ff9999}
-                33.3% {color: #99ff99}
-                66.6% {color: #9999ff}
-                100% {color: #ff9999}
-            }
-            h3 > span:nth-child(1){
-                animation: rainbow 0.8s infinite linear;
-            }
-            h3 > span:nth-child(2){
-                animation: rainbow 0.8s 0.1s infinite linear;
-            }
-            h3 > span:nth-child(3){
-                animation: rainbow 0.8s 0.3s infinite linear;
-            }
-            h3 > span:nth-child(4){
-                animation: rainbow 0.8s 0.4s infinite linear;
-            }
-            h3 > span:nth-child(5){
-                animation: rainbow 0.8s 0.5s infinite linear;
-            }
-            h3 > span:nth-child(6){
-                animation: rainbow 0.8s 0.6s infinite linear;
-            }
         </style>
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script>
+            function showRooms(buttonElem){
+                let elem = document.querySelector('#roomsSection');
+
+                if(elem.style.display === 'flex'){
+                    elem.style.display = 'none';
+                    buttonElem.querySelector('div').style.display = 'flex';
+                } else {
+                    elem.style.display = 'flex';
+                    buttonElem.querySelector('div').style.display = 'none';
+                }
+            }
+            function showUsers(buttonElem){
+                let elem = document.querySelector('#usersSection');
+
+                if(elem.style.display === 'flex'){
+                    elem.style.display = 'none';
+                    buttonElem.querySelector('div').style.display = 'flex';
+                } else {
+                    elem.style.display = 'flex';
+                    buttonElem.querySelector('div').style.display = 'none';
+                }
+            }
+        </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
-        <h1>ElemeleApp</h1>
-        <h2>Cześć, {{ owner_username }}</h2>
-        <h3><span>☆</span> <span>☆</span> <span>☆</span> Twoje mieszkania <span>☆</span> <span>☆</span> <span>☆</span></h3>
-        <section class="house-wrap">
-            {% for house in houses %}
-                <a href="/houses/{{ house.id }}">
-                <span>{{ house.name }}</span>
+        <a href="/"><h1>ElemeleApp</h1></a>
+        <h2>{{ room_name }}</h2>
+
+        <h3 onclick="showRooms(this)">Obowiązki w pokoju</h3>
+        <section class="house-wrap" id="roomsSection">
+            {% for chore in chores %}
+                <a href="#">
+                    <span>{{ chore.name }}</span>
                 </a>
             {% endfor %}
-            <a href="/create-house">
-            <span>+</span>
+            <a href="#">
+                <span>+</span>
             </a>
         </section>
     </main>

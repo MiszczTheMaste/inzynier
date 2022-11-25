@@ -12,11 +12,11 @@
             }
             html,body{
                 margin: 0;
-                background-color: #1d1c19;
+                background-color: #0f0f0f;
+                color: #ffffff;
                 font-family: Arial, sans-serif;
             }
             main{
-                background-color: #0f0f0f;
                 width: 100vw;
                 height: 100vh;
                 top: 0;
@@ -26,12 +26,19 @@
                 width: 100%;
             }
             h1{
-                color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 64px;
-                margin: 0;
-                width: 100vw;
+                font-size: 80px;
+                margin-top: 75px;
+            }
+            h2{
+                text-align: center;
+                font-size: 48px;
+                margin-bottom: 200px;
+            }
+            h3{
+                text-align: center;
+                font-size: 32px;
             }
             a{
                 color: #ffffff;
@@ -51,7 +58,31 @@
                 justify-content: center;
                 width: 50vw;
                 height: 50vw;
-                border: solid 1px #fff;
+                border: solid 2px #fff;
+            }
+            label {
+                color: #fff;
+                display: block;
+                width: 100%;
+                text-align: center;
+                font-size: 48px;
+            }
+            section input {
+                width: 100%;
+                border: none;
+                height: 80px;
+                font-size: 72px;
+            }
+            .login-button{
+                background-color: #273927;
+                width: 100%;
+                margin-top: 50px;
+                height: 300px;
+                font-size: 48px;
+                color: #fff;
+                border: none;
+                position: absolute;
+                bottom: 0;
             }
         </style>
     {% endblock %}
@@ -63,16 +94,19 @@
 <body>
 {% block body %}
     <main>
-        <h1>{{ house.name }}</h1>
-        <section>
-            <form method="post" action="/api/houses/{{ house.id }}/rooms.form">
+        <a href="/"><h1>ElemeleApp</h1></a>
+        <h2>Dodawanie pokoi do mieszkania<br>{{ house.name }}</h2>
+        <form method="post" action="/api/houses/{{ house.id }}/rooms.form">
+            <section>
                 <label for="name">Nazwa</label>
                 <input type="text" name="name">
-                <label for="icon_id">Ikona</label>
-                <input type="text" name="icon_id">
-                <input type="submit" value="Dodaj">
-            </form>
-        </section>
+            </section>
+            <input type="submit" value="Dodaj" class="login-button">
+            <section style="display: none">
+                <label for="icon_id">ikona</label>
+                <input type="text" name="icon_id" value="a06478fe-92fa-4cd9-a583-03f308e36f60">
+            </section>
+        </form>
     </main>
 {% endblock %}
 </body>

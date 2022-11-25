@@ -11,7 +11,7 @@ use Traversable;
 abstract class AbstractCollection implements CollectionInterface
 {
     /**
-     * @var mixed[]
+     * @var array<mixed,mixed>
      */
     protected array $collection;
 

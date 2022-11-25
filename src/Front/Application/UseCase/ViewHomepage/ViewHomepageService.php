@@ -38,10 +38,7 @@ final class ViewHomepageService implements ViewHomepageServiceInterface
             $page = new Response($this->view->render('base'));
         } else {
             $houses = $this->symfonyInternalClient->sendRequest(
-                Request::create(
-                    'http://127.0.0.1:8000/api/houses.json',
-                    'GET'
-                )
+                Request::create('http://127.0.0.1:8000/api/houses.json',)
             );
 
             $page = new Response(

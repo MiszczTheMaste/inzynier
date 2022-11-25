@@ -7,33 +7,27 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <style>
-            html,body{
-                margin: 0;
-                background-color: #1d1c19;
-                font-family: Arial, sans-serif;
+            *{
                 box-sizing: border-box;
             }
-            main{
+            html,body{
+                margin: 0;
                 background-color: #0f0f0f;
+                color: #ffffff;
+                font-family: Arial, sans-serif;
+            }
+            main{
                 width: 100vw;
                 height: 100vh;
                 top: 0;
                 position: absolute;
-                display: flex;
-                flex-wrap: wrap;
-            }
-            section{
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
             }
             h1{
                 color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 64px;
-                margin: 0;
+                font-size: 80px;
+                margin-top: 75px;
             }
             a{
                 display: block;
@@ -41,6 +35,7 @@
                 text-decoration: none;
                 text-align: center;
                 font-size: 48px;
+                height: 300px;
             }
             .login-parent{
                 background-color: #273927;
@@ -48,6 +43,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                margin-top: 200px;
             }
             .register-parent{
                 background-color: #272727;
@@ -55,6 +51,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                margin-top: 100px;
             }
         </style>
     {% endblock %}
@@ -66,7 +63,7 @@
 <body>
 {% block body %}
     <main>
-        <section><h1>Elemele</h1></section>
+        <h1>ElemeleApp</h1>
         <a href="/login" class="login-parent"><span>Logowanie</span></a>
         <a href="/register" class="register-parent"><span>Rejestracja</span></a>
     </main>

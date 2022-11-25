@@ -6,6 +6,7 @@ use App\House\Action\AddUserToHouse\AddUserToHouseAction;
 use App\House\Action\CreateChore\CreateChoreAction;
 use App\House\Action\CreateHouse\CreateHouseAction;
 use App\House\Action\CreateRoom\CreateRoomAction;
+use App\House\Action\GetChores\GetChoresAction;
 use App\House\Action\GetHouse\GetHouseAction;
 use App\House\Action\GetHousesForUser\GetHousesForUserAction;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -38,6 +39,10 @@ return static function (RoutingConfigurator $routes) {
     $routes->add('post.api.house.room', '/api/houses/{house_id}/rooms.{format}')
         ->controller(CreateRoomAction::class)
         ->methods(['POST']);
+
+    $routes->add('get.api.house.room.chores', '/api/houses/{house_id}/rooms/{room_id}/chores.{format}')
+        ->controller(GetChoresAction::class)
+        ->methods(['GET']);
 
     $routes->add('post.api.house.room.chore', '/api/houses/{house_id}/rooms/{room_id}/chores.{format}')
         ->controller(CreateChoreAction::class)
