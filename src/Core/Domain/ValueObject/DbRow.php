@@ -20,11 +20,13 @@ final class DbRow extends AbstractCollection
     /**
      * @throws ItemNotFoundInCollectionException
      */
-    public function getFieldValue(string $name): string
+    public function getFieldValue(string $name): string|int|float|bool
     {
-        /** @var DbField $item */
-        $item = $this->getItem($name);
-        return $item->getValue();
+        if (false === array_key_exists($name, $this->collection)) {
+            throw new ItemNotFoundInCollectionException();
+        }
+
+        return $this->collection[$name]->getValue();
     }
 
     protected function getCollectionClass(): string

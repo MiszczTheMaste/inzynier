@@ -22,14 +22,22 @@ final class Room extends AbstractEntity
     private bool $removed;
 
     /**
+     * @param IdInterface $id
      * @param string $name
      * @param IdInterface $iconId
      * @param ChoreCollection $choreCollection
      * @param DateTimeImmutable $creationDate
      * @param bool $removed
      */
-    public function __construct(string $name, IdInterface $iconId, ChoreCollection $choreCollection, DateTimeImmutable $creationDate, bool $removed)
-    {
+    public function __construct(
+        IdInterface $id,
+        string $name,
+        IdInterface $iconId,
+        ChoreCollection $choreCollection,
+        DateTimeImmutable $creationDate,
+        bool $removed = false
+    ) {
+        parent::__construct($id);
         $this->name = $name;
         $this->iconId = $iconId;
         $this->choreCollection = $choreCollection;
@@ -62,7 +70,10 @@ final class Room extends AbstractEntity
         return $this->choreCollection;
     }
 
-
+    public function addChore(Chore $chore): void
+    {
+        $this->choreCollection->add($chore);
+    }
 
     /**
      * @return DateTimeImmutable

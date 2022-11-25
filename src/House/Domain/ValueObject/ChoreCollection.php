@@ -33,6 +33,11 @@ final class ChoreCollection extends AbstractCollection
         throw new ChoreNotFoundException();
     }
 
+    public function add(Chore $chore): void
+    {
+        $this->collection[] = $chore;
+    }
+
     protected function getCollectionClass(): string
     {
         return Chore::class;

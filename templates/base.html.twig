@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Elemele{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            html,body{
+                margin: 0;
+                background-color: #1d1c19;
+                font-family: Arial, sans-serif;
+                box-sizing: border-box;
+            }
+            main{
+                background-color: #0f0f0f;
+                width: 100vw;
+                height: 100vh;
+                top: 0;
+                position: absolute;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            section{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            h1{
+                color: #ffffff;
+                font-family: Impact, sans-serif;
+                text-align: center;
+                font-size: 64px;
+                margin: 0;
+            }
+            a{
+                display: block;
+                color: #ffffff;
+                text-decoration: none;
+                text-align: center;
+                font-size: 48px;
+            }
+            .login-parent{
+                background-color: #273927;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .register-parent{
+                background-color: #272727;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <main>
+        <section><h1>Elemele</h1></section>
+        <a href="/login" class="login-parent"><span>Logowanie</span></a>
+        <a href="/register" class="register-parent"><span>Rejestracja</span></a>
+    </main>
+{% endblock %}
+</body>
+</html>

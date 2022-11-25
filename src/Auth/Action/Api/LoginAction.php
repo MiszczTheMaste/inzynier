@@ -11,6 +11,7 @@ use App\Auth\Domain\Exception\InvalidUsernameException;
 use App\Core\Domain\Exception\DatabaseException;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,14 +24,32 @@ final class LoginAction
         $this->service = $service;
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): Response
     {
         try {
-            $data = json_decode($request->getContent(), true);
-            return new JsonResponse(
-                $this->service->handle(new LoginRequest($data['username'], $data['password'])),
-                Response::HTTP_CREATED
-            );
+            if ('json' === $request->get('format')) {
+                $data = json_decode((string) $request->getContent(), true);
+            } else {
+                $data = [
+                    'username' => $request->get('username'),
+                    'password' => $request->get('password')
+                ];
+            }
+
+            if (false === is_array($data)) {
+                throw new Exception();
+            }
+
+            $response = $this->service->handle(new LoginRequest($data['username'], $data['password']));
+
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    $response->getMessage(),
+                    $response->getCode()
+                );
+            }
+
+            return new RedirectResponse('/');
         } catch (DatabaseException $e) {
             return new JsonResponse(
                 ['message' => 'Error during connection.'],

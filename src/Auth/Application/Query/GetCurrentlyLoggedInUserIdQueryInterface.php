@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\House\Application\Query;
+namespace App\Auth\Application\Query;
 
 use App\Core\Domain\Exception\DatabaseException;
 
 interface GetCurrentlyLoggedInUserIdQueryInterface
 {
     /**
-     * @return string
+     * @return string|null
      * @throws DatabaseException
      */
-    public function execute(): string;
+    public function execute(): ?string;
 }

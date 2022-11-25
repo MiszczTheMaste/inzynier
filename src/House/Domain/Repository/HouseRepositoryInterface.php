@@ -9,6 +9,7 @@ use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\Repository\RepositoryInterface;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Entity\House;
+use App\House\Domain\Exception\RoomNotFoundException;
 
 interface HouseRepositoryInterface extends RepositoryInterface
 {
@@ -20,6 +21,7 @@ interface HouseRepositoryInterface extends RepositoryInterface
 
     /**
      * @throws DatabaseException
+     * @throws RoomNotFoundException
      */
     public function get(IdInterface $id): House;
 }

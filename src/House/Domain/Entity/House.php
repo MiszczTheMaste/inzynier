@@ -13,6 +13,8 @@ use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
 use App\House\Domain\Event\RoomRemovedEvent;
+use App\House\Domain\Event\UserAddedToHouseEvent;
+use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\ValueObject\ChoreCollection;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
 use App\House\Domain\ValueObject\DaysInterval;
@@ -21,40 +23,94 @@ use App\House\Domain\ValueObject\RoomCollection;
 use App\House\Domain\ValueObject\UserIdCollection;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class House extends AbstractAggregate
 {
+    /**
+     * @var RoomCollection
+     */
     private RoomCollection $roomCollection;
+    /**
+     * @var IdInterface
+     */
+    private IdInterface $owner;
+    /**
+     * @var IdInterface
+     */
+    private IdInterface $iconId;
 
+    /**
+     * @var string
+     */
+    private string $name;
+
+    /**
+     * @var UserIdCollection
+     */
     private UserIdCollection $users;
 
-    private DateTimeImmutable $creationTime;
+    /**
+     * @var DateTimeImmutable
+     */
+    private DateTimeImmutable $creationDate;
 
+    /**
+     * @var bool
+     */
     private bool $removed;
 
+    /**
+     * @param IdInterface $id
+     * @param IdInterface $owner
+     * @param IdInterface $iconId
+     * @param string $name
+     * @param RoomCollection $roomCollection
+     * @param UserIdCollection $users
+     * @param DateTimeImmutable|null $creationDate
+     * @param bool $removed
+     */
     public function __construct(
         IdInterface $id,
+        IdInterface $owner,
+        IdInterface $iconId,
+        string $name,
         RoomCollection $roomCollection,
         UserIdCollection $users,
-        ?DateTimeImmutable $creationTime = null,
+        ?DateTimeImmutable $creationDate = null,
         bool $removed = false,
     ) {
         parent::__construct($id);
+        $this->owner = $owner;
+        $this->iconId = $iconId;
+        $this->name = $name;
         $this->roomCollection = $roomCollection;
         $this->users = $users;
-        $this->creationTime = $creationTime ?? new DateTimeImmutable();
+        $this->creationDate = $creationDate ?? new DateTimeImmutable();
         $this->removed = $removed;
 
-        if (is_null($creationTime)) {
+        if (is_null($creationDate)) {
             $this->raise(
                 new HouseCreatedEvent(
                     $id,
+                    $owner,
+                    $iconId,
+                    $name,
                     $users,
-                    $this->creationTime
+                    $this->creationDate
                 )
             );
         }
     }
 
+    /**
+     * @param IdInterface $id
+     * @param string $name
+     * @param IdInterface $iconId
+     * @return void
+     * @throws InvalidObjectTypeInCollectionException
+     */
     public function addRoom(Idinterface $id, string $name, IdInterface $iconId): void
     {
         $room = new Room(
@@ -69,6 +125,7 @@ final class House extends AbstractAggregate
         $this->raise(
             new RoomCreatedEvent(
                 $room->getId(),
+                $this->getId(),
                 $room->getName(),
                 $room->getIconId(),
                 $room->getCreationDate()
@@ -78,6 +135,7 @@ final class House extends AbstractAggregate
 
     /**
      * @throws InvalidObjectTypeInCollectionException
+     * @throws RoomNotFoundException
      */
     public function addChore(
         IdInterface $id,
@@ -87,35 +145,57 @@ final class House extends AbstractAggregate
         DateTimeImmutable $initialDate,
         IdInterface $iconId,
         IdInterface $userId,
+        string $name
     ): void {
         $chore = new Chore(
             $id,
-            $roomId,
             $daysInterval,
             $iconId,
             $userId,
+            $name,
             new ChoreFulfilmentCollection([
-                    new ChoreFulfilment(
-                        $initialFulfilmentId,
-                        $initialDate,
-                        false,
-                        Rate::createWithZeroValue()
-                    )
-                ])
+                new ChoreFulfilment(
+                    $initialFulfilmentId,
+                    $initialDate,
+                    false,
+                    Rate::createWithZeroValue()
+                )
+            ]),
+            new DateTimeImmutable(),
         );
+
+        $this->getRoom($roomId)->addChore($chore);
 
         $this->raise(
             new ChoreCreatedEvent(
                 $chore->getId(),
+                $roomId,
                 $chore->getDaysInterval(),
                 $chore->getIconId(),
                 $chore->getUserId(),
                 $chore->getChoreFulfilmentCollection()->getInitial()->getId(),
-                $chore->getChoreFulfilmentCollection()->getInitial()->getDeadline()
+                $chore->getName(),
+                $chore->getChoreFulfilmentCollection()->getInitial()->getDeadline(),
+                $chore->getCreationDate()
             )
         );
     }
 
+    public function addUser(IdInterface $userId): void
+    {
+        $this->users->add($userId);
+
+        $this->raise(
+            new UserAddedToHouseEvent(
+                $this->id,
+                $userId
+            )
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function removeHouse(): void
     {
         $this->removed = true;
@@ -123,6 +203,11 @@ final class House extends AbstractAggregate
         $this->raise(new HouseRemovedEvent($this->getId()));
     }
 
+    /**
+     * @param IdInterface $id
+     * @return void
+     * @throws RoomNotFoundException
+     */
     public function removeRoom(IdInterface $id): void
     {
         $room = $this->getRoom($id);
@@ -131,6 +216,12 @@ final class House extends AbstractAggregate
         $this->raise(new RoomRemovedEvent($this->getId()));
     }
 
+    /**
+     * @param IdInterface $roomId
+     * @param IdInterface $choreId
+     * @return void
+     * @throws RoomNotFoundException
+     */
     public function removeChore(IdInterface $roomId, IdInterface $choreId): void
     {
         $room = $this->getRoom($roomId);
@@ -139,13 +230,69 @@ final class House extends AbstractAggregate
         $this->raise(new ChoreRemovedEvent($choreId));
     }
 
+    /**
+     * @param IdInterface $id
+     * @return Room
+     * @throws RoomNotFoundException
+     */
     public function getRoom(IdInterface $id): Room
     {
         return $this->roomCollection->get($id);
     }
 
+    /**
+     * @return UserIdCollection
+     */
     public function getUsers(): UserIdCollection
     {
         return $this->users;
+    }
+
+    /**
+     * @return RoomCollection
+     */
+    public function getRoomCollection(): RoomCollection
+    {
+        return $this->roomCollection;
+    }
+
+    /**
+     * @return IdInterface
+     */
+    public function getOwner(): IdInterface
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @return IdInterface
+     */
+    public function getIconId(): IdInterface
+    {
+        return $this->iconId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return DateTimeImmutable
+     */
+    public function getCreationDate(): DateTimeImmutable
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRemoved(): bool
+    {
+        return $this->removed;
     }
 }

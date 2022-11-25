@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Core\Domain\ValueObject;
 
-use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use ArrayIterator;
 use Traversable;
@@ -55,9 +54,11 @@ abstract class AbstractCollection implements CollectionInterface
     protected function validate(array $collection): void
     {
         foreach ($collection as $item) {
-            if ($item::class !== $this->getCollectionClass()) {
-                throw new InvalidObjectTypeInCollectionException();
+            if (is_a($item, $this->getCollectionClass(), true)) {
+                continue;
             }
+
+            throw new InvalidObjectTypeInCollectionException();
         }
     }
 }

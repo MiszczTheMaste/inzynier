@@ -29,9 +29,9 @@ final class Uuid implements IdInterface
         return new self(BaseUuid::fromString($identifier));
     }
 
-    public function equalTo(IdInterface $identifier): bool
+    public function equals(IdInterface $id): bool
     {
-        return $this->id->toString() === $identifier->toString();
+        return $this->id->toString() === $id->toString();
     }
 
     /**

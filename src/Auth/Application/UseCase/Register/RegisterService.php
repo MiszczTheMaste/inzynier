@@ -8,6 +8,8 @@ use App\Auth\Domain\Entity\User;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Domain\ValueObject\PasswordHash;
 use App\Auth\Domain\ValueObject\Username;
+use App\Core\Application\Http\HttpCodes;
+use App\Core\Application\UseCase\UseCasePayload;
 
 final class RegisterService implements RegisterServiceInterface
 {
@@ -21,19 +23,19 @@ final class RegisterService implements RegisterServiceInterface
     /**
      * @inheritdoc
      */
-    public function handle(RegisterRequest $request): array
+    public function handle(RegisterRequest $request): UseCasePayload
     {
         $user = new User(
             $this->repository->generateId(),
-            new Username($request->getData()['username']),
-            PasswordHash::createHash($request->getData()['password']),
+            new Username((string) $request->getField('username')),
+            PasswordHash::createHash((string) $request->getField('password')),
         );
 
         $this->repository->persist($user);
 
-        return [
-            'message' => 'User created',
-            'username' => $user->getUsername()->toString()
-        ];
+        return new UseCasePayload(
+            'User created',
+            HttpCodes::HTTP_CREATED
+        );
     }
 }

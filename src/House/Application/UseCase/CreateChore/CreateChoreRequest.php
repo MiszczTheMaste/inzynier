@@ -4,20 +4,24 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\CreateChore;
 
-final class CreateChoreRequest
+use App\Core\Application\UseCase\AbstractArrayRequest;
+
+final class CreateChoreRequest extends AbstractArrayRequest
 {
     private string $houseId;
 
-    private array $data;
+    private string $roomId;
 
     /**
      * @param string $houseId
+     * @param string $roomId
      * @param array $data
      */
-    public function __construct(string $houseId, array $data)
+    public function __construct(string $houseId, string $roomId, array $data)
     {
+        parent::__construct($data);
         $this->houseId = $houseId;
-        $this->data = $data;
+        $this->roomId = $roomId;
     }
 
     /**
@@ -29,10 +33,10 @@ final class CreateChoreRequest
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getData(): array
+    public function getRoomId(): string
     {
-        return $this->data;
+        return $this->roomId;
     }
 }

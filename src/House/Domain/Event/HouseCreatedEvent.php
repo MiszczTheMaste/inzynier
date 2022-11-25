@@ -13,18 +13,30 @@ final class HouseCreatedEvent implements EventInterface
 {
     private IdInterface $id;
 
+    private IdInterface $owner;
+
+    private IdInterface $iconId;
+
+    private string $name;
+
     private UserIdCollection $users;
 
     private DateTimeImmutable $creationDate;
 
     /**
      * @param IdInterface $id
+     * @param IdInterface $owner
+     * @param IdInterface $iconId
+     * @param string $name
      * @param UserIdCollection $users
      * @param DateTimeImmutable $creationDate
      */
-    public function __construct(IdInterface $id, UserIdCollection $users, DateTimeImmutable $creationDate)
+    public function __construct(IdInterface $id, IdInterface $owner, IdInterface $iconId, string $name, UserIdCollection $users, DateTimeImmutable $creationDate)
     {
         $this->id = $id;
+        $this->owner = $owner;
+        $this->iconId = $iconId;
+        $this->name = $name;
         $this->users = $users;
         $this->creationDate = $creationDate;
     }
@@ -35,6 +47,30 @@ final class HouseCreatedEvent implements EventInterface
     public function getId(): IdInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @return IdInterface
+     */
+    public function getOwner(): IdInterface
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @return IdInterface
+     */
+    public function getIconId(): IdInterface
+    {
+        return $this->iconId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\House\Infrastructure\Query;
+namespace App\Auth\Infrastructure\Query;
 
-use App\Core\Domain\Exception\DatabaseException;
-use App\House\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
+use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class GetCurrentlyLoggedInUserIdSessionQuery implements GetCurrentlyLoggedInUserIdQueryInterface
@@ -23,13 +22,8 @@ final class GetCurrentlyLoggedInUserIdSessionQuery implements GetCurrentlyLogged
     /**
      * @inheritdoc
      */
-    public function execute(): string
+    public function execute(): ?string
     {
-        $userId = $this->requestStack->getSession()->get('auth.user-id');
-        if (is_null($userId)) {
-            throw new DatabaseException();
-        }
-
-        return $userId;
+        return $this->requestStack->getSession()->get('auth.user-id');
     }
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Elemele{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            html,body{
+                margin: 0;
+                background-color: #1d1c19;
+                font-family: Arial, sans-serif;
+            }
+            main{
+                background-color: #0f0f0f;
+                width: 100vw;
+                height: 100vh;
+                top: 0;
+                position: absolute;
+            }
+            section{
+                width: 100%;
+            }
+            h1{
+                color: #ffffff;
+                font-family: Impact, sans-serif;
+                text-align: center;
+                font-size: 64px;
+                margin: 0;
+                width: 100vw;
+            }
+            a{
+                color: #ffffff;
+                text-decoration: none;
+                text-align: center;
+                font-size: 48px;
+            }
+            .house-wrap{
+                display: flex;
+                flex-wrap: wrap;
+                align-content: start;
+                justify-content: flex-start;
+            }
+            .house-wrap > a{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50vw;
+                height: 50vw;
+                border: solid 1px #fff;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <main>
+        <h1>Elemele</h1>
+        <section class="house-wrap">
+            {% for house in houses %}
+                <a href="/houses/{{ house.id }}">
+                <span>{{ house.name }}</span>
+                </a>
+            {% endfor %}
+            <a href="/create-house">
+            <span>+</span>
+            </a>
+        </section>
+    </main>
+{% endblock %}
+</body>
+</html>

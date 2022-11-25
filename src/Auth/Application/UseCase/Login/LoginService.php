@@ -8,6 +8,8 @@ use App\Auth\Application\AuthService\SessionAuthService;
 use App\Auth\Domain\Exception\InvalidPasswordException;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Domain\ValueObject\Username;
+use App\Core\Application\Http\HttpCodes;
+use App\Core\Application\UseCase\UseCasePayload;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class LoginService implements LoginServiceInterface
@@ -29,14 +31,17 @@ final class LoginService implements LoginServiceInterface
     /**
      * @inheritDoc
      */
-    public function handle(LoginRequest $request): array
+    public function handle(LoginRequest $request): UseCasePayload
     {
         $username = new Username($request->getUsername());
 
         $sessionData = $this->requestStack->getSession()->get(SessionAuthService::SESSION_KEY);
 
         if (false === is_null($sessionData)) {
-            return ['message' => 'User already logged in'];
+            return new UseCasePayload(
+                'User already logged in',
+                HttpCodes::HTTP_BAD_REQUEST
+            );
         }
 
         $user = $this->repository->get($username);
@@ -47,6 +52,9 @@ final class LoginService implements LoginServiceInterface
 
         $this->requestStack->getSession()->set(SessionAuthService::SESSION_KEY, $user->getId()->toString());
 
-        return ['message' => 'Logged in'];
+        return new UseCasePayload(
+            'Logged in',
+            HttpCodes::HTTP_OK
+        );
     }
 }

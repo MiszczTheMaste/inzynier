@@ -6,6 +6,7 @@ namespace App\Auth\Application\UseCase\Login;
 
 use App\Auth\Domain\Exception\InvalidPasswordException;
 use App\Auth\Domain\Exception\InvalidUsernameException;
+use App\Core\Application\UseCase\UseCasePayload;
 use App\Core\Domain\Exception\DatabaseException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 
@@ -17,5 +18,5 @@ interface LoginServiceInterface
      * @throws InvalidUsernameException
      * @throws InvalidPasswordException
      */
-    public function handle(LoginRequest $request): array;
+    public function handle(LoginRequest $request): UseCasePayload;
 }

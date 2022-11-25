@@ -25,7 +25,12 @@ final class EventHandlerCollection extends AbstractCollection
         if (strlen($handlerFunction) === 0 || strlen($eventNamespace) === 0) {
             throw new InvalidObjectTypeInCollectionException();
         }
-        $this->collection[$eventNamespace] = $handlerFunction;
+        $this->collection[$eventNamespace] = new EventHandler($eventNamespace, $handlerFunction);
+    }
+
+    public function getItem(string $eventNamespace): EventHandler
+    {
+        return $this->collection[$eventNamespace];
     }
 
     protected function getCollectionClass(): string

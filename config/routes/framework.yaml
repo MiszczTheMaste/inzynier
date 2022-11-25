@@ -2,3 +2,7 @@ when@dev:
     _errors:
         resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
         prefix: /_error
+api_routes:
+    resource: "../routing/api.php"
+view_routes:
+    resource: "../routing/view.php"

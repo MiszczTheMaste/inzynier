@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\CreateHouse;
 
+use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
 use App\Core\Domain\Exception\DatabaseException;
+use App\Core\Domain\Exception\InvalidIdException;
 use App\Core\Domain\Exception\InvalidInputDataException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
-use App\House\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
+use App\Core\Domain\ValueObject\Uuid;
 use App\House\Domain\Entity\House;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 use App\House\Domain\ValueObject\RoomCollection;
@@ -40,14 +42,19 @@ final class CreateHouseService implements CreateHouseServiceInterface
      * @throws DatabaseException
      * @throws InvalidInputDataException
      * @throws InvalidObjectTypeInCollectionException
+     * @throws InvalidIdException
      */
     public function handle(CreateHouseRequest $request): UseCasePayload
     {
         $this->validate($request->getData());
+        $creatorId = Uuid::fromString($this->getUserIdQuery->execute());
         $house = new House(
             $this->repository->generateId(),
+            $creatorId,
+            Uuid::fromString($request->getField('icon_id')),
+            $request->getField('name'),
             new RoomCollection([]),
-            new UserIdCollection([$this->getUserIdQuery->execute()])
+            new UserIdCollection([$creatorId])
         );
 
         $this->repository->persist($house);
@@ -66,6 +73,9 @@ final class CreateHouseService implements CreateHouseServiceInterface
     private function validate(array $data): void
     {
         if (false === array_key_exists('name', $data)) {
+            throw new InvalidInputDataException();
+        }
+        if (false === array_key_exists('icon_id', $data)) {
             throw new InvalidInputDataException();
         }
     }

@@ -83,9 +83,9 @@ final class PDO implements DatabaseAbstractionLayerInterface
                 foreach ($row as $colum => $field) {
                     $fieldCollection[$colum] = new DbField($field);
                 }
+
                 $rowCollection[] = new DbRow($fieldCollection);
             }
-
             return new DbRowCollection($rowCollection);
         } catch (InvalidObjectTypeInCollectionException $e) {
             throw DatabaseException::fromException($e);
@@ -106,39 +106,20 @@ final class PDO implements DatabaseAbstractionLayerInterface
 
     public function beginTransaction(): void
     {
-        if ($this->transactionDepth === 0) {
-            $this->pdo->beginTransaction();
-        } else {
-            $this->pdo->exec('SAVEPOINT LEVEL' . $this->transactionDepth);
+        if ($this->pdo->inTransaction()) {
+            return;
         }
 
-        $this->transactionDepth++;
+        $this->pdo->beginTransaction();
     }
 
     public function commitTransaction(): void
     {
-        $this->transactionDepth--;
-
-        if ($this->transactionDepth === 0) {
-            $this->pdo->commit();
-            return;
-        }
-
-        $this->pdo->exec('RELEASE SAVEPOINT LEVEL' . $this->transactionDepth);
+        $this->pdo->commit();
     }
 
     public function rollbackTransaction(): void
     {
-        if ($this->transactionDepth === 0) {
-            return;
-        }
-
-        $this->transactionDepth--;
-        if ($this->transactionDepth === 0) {
-            $this->pdo->rollBack();
-            return;
-        }
-
-        $this->pdo->exec('ROLLBACK TO SAVEPOINT LEVEL' . $this->transactionDepth);
+        $this->pdo->rollBack();
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\CreateRoom;
 
-final class CreateRoomRequest
+use App\Core\Application\UseCase\AbstractArrayRequest;
+
+final class CreateRoomRequest extends AbstractArrayRequest
 {
     private string $houseId;
-
-    private array $data;
 
     /**
      * @param string $houseId
@@ -16,8 +16,8 @@ final class CreateRoomRequest
      */
     public function __construct(string $houseId, array $data)
     {
+        parent::__construct($data);
         $this->houseId = $houseId;
-        $this->data = $data;
     }
 
     /**
@@ -26,13 +26,5 @@ final class CreateRoomRequest
     public function getHouseId(): string
     {
         return $this->houseId;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
     }
 }

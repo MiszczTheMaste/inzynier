@@ -131,7 +131,7 @@ abstract class AbstractEventSQLRepository
             return;
         }
 
-        $handler = $this->implementedEvents()->getItem($event::class);
+        $handler = $this->implementedEvents()->getItem($event::class)->getHandlerFunction();
 
         $this->$handler($event);
     }

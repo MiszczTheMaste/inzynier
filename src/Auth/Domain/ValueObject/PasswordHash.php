@@ -22,7 +22,7 @@ final class PasswordHash
     {
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-        if (false == $hash) {
+        if (false === (bool) $hash) {
             throw new PasswordHashingException();
         }
 

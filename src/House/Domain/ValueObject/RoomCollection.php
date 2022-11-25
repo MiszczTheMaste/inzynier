@@ -6,9 +6,7 @@ namespace App\House\Domain\ValueObject;
 
 use App\Core\Domain\ValueObject\AbstractCollection;
 use App\Core\Domain\ValueObject\IdInterface;
-use App\House\Domain\Entity\Chore;
 use App\House\Domain\Entity\Room;
-use App\House\Domain\Exception\ChoreNotFoundException;
 use App\House\Domain\Exception\RoomNotFoundException;
 
 final class RoomCollection extends AbstractCollection

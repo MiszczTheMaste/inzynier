@@ -6,13 +6,19 @@ namespace App\House\Application\UseCase\CreateRoom;
 
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use App\Core\Domain\Exception\DatabaseException;
+use App\Core\Domain\Exception\InvalidIdException;
 use App\Core\Domain\Exception\InvalidInputDataException;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\Uuid;
-use App\House\Application\UseCase\CreateHouse\CreateHouseRequest;
+use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
 final class CreateRoomService implements CreateRoomServiceInterface
 {
+    /**
+     * @var HouseRepositoryInterface
+     */
     private HouseRepositoryInterface $repository;
 
     /**
@@ -23,14 +29,24 @@ final class CreateRoomService implements CreateRoomServiceInterface
         $this->repository = $repository;
     }
 
+    /**
+     * @param CreateRoomRequest $request
+     * @return UseCasePayload
+     * @throws InvalidInputDataException
+     * @throws DatabaseException
+     * @throws InvalidIdException
+     * @throws InvalidObjectTypeInCollectionException
+     * @throws RoomNotFoundException
+     */
     public function handle(CreateRoomRequest $request): UseCasePayload
     {
         $this->validate($request->getData());
         $house = $this->repository->get(Uuid::fromString($request->getHouseId()));
+
         $house->addRoom(
             $this->repository->generateId(),
-            $request->getData()['name'],
-            Uuid::fromString($request->getData()['icon_id'])
+            $request->getField('name'),
+            Uuid::fromString($request->getField('icon_id'))
         );
 
         $this->repository->persist($house);

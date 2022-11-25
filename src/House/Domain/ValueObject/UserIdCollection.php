@@ -17,6 +17,11 @@ final class UserIdCollection extends AbstractCollection
         return $this->collection;
     }
 
+    public function add(IdInterface $userId): void
+    {
+        $this->collection[] = $userId;
+    }
+
     protected function getCollectionClass(): string
     {
         return IdInterface::class;
