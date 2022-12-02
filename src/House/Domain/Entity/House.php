@@ -207,7 +207,7 @@ final class House extends AbstractAggregate
 
         $newFulfilment = new ChoreFulfilment(
             $nextFulfilmentId,
-            new DateTimeImmutable($fulfilment->getDeadline()->format('Y-m-d') .' +'. $chore->getDaysInterval()->toInt() . 'days'),
+            new DateTimeImmutable($fulfilment->getDeadline()->format('Y-m-d') . ' +' . $chore->getDaysInterval()->toInt() . 'days'),
             false,
             Rate::createWithZeroValue()
         );

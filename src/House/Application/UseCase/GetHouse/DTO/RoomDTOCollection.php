@@ -24,6 +24,7 @@ final class RoomDTOCollection extends AbstractCollection
                     'id' => $chore->getId(),
                     'name' => $chore->getName(),
                     'icon_url' => $chore->getIcon(),
+                    'chores_after_deadline' => $chore->getChoresAfterDeadline(),
                 ];
             },
             $this->collection

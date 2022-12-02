@@ -59,10 +59,20 @@ final class GetHouseSqlQuery extends AbstractSqlQuery implements GetHouseQueryIn
 
         $roomCollection = [];
         foreach ($rooms->getCollection() as $row) {
+            $choresAfterDeadline = $this->fetch(
+                'SELECT count(1) as after_deadline
+                FROM chores_fulfilments 
+                JOIN chores c on c.id = chores_fulfilments.chore_id 
+                JOIN rooms r on c.room_id = r.id
+                WHERE r.id = :room_id AND chores_fulfilments.finished = false AND chores_fulfilments.deadline < NOW()',
+                ['room_id' => (string)$row->getFieldValue('id')]
+            );
+
             $roomCollection[] = new RoomDTO(
                 (string)$row->getFieldValue('id'),
                 (string)$row->getFieldValue('name'),
                 (string)$row->getFieldValue('src'),
+                (int) $choresAfterDeadline->getFieldValue('after_deadline'),
             );
         }
 

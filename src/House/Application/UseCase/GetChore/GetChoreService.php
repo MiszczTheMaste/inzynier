@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\GetChore;
 
+use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
 use App\House\Application\Query\GetRoomNameQueryInterface;
@@ -15,14 +16,18 @@ final class GetChoreService implements GetChoreServiceInterface
 
     private GetRoomNameQueryInterface $getRoomNameQuery;
 
+    private GetCurrentlyLoggedInUserIdQueryInterface $getCurrentlyLoggedInUserIdQuery;
+
     /**
      * @param GetChoreQueryInterface $getChoreQuery
      * @param GetRoomNameQueryInterface $getRoomNameQuery
+     * @param GetCurrentlyLoggedInUserIdQueryInterface $getCurrentlyLoggedInUserIdQuery
      */
-    public function __construct(GetChoreQueryInterface $getChoreQuery, GetRoomNameQueryInterface $getRoomNameQuery)
+    public function __construct(GetChoreQueryInterface $getChoreQuery, GetRoomNameQueryInterface $getRoomNameQuery, GetCurrentlyLoggedInUserIdQueryInterface $getCurrentlyLoggedInUserIdQuery)
     {
         $this->getChoreQuery = $getChoreQuery;
         $this->getRoomNameQuery = $getRoomNameQuery;
+        $this->getCurrentlyLoggedInUserIdQuery = $getCurrentlyLoggedInUserIdQuery;
     }
 
     public function handle(GetChoreRequest $request): UseCasePayload
@@ -38,7 +43,10 @@ final class GetChoreService implements GetChoreServiceInterface
                     'id' => $request->getRoomId(),
                     'name' => $this->getRoomNameQuery->execute($request->getRoomId())
                 ],
-                'chore' => $this->getChoreQuery->execute($request->getChoreId())->toArray()
+                'chore' => $this->getChoreQuery->execute($request->getChoreId())->toArray(),
+                'user' => [
+                    'id' => $this->getCurrentlyLoggedInUserIdQuery->execute()
+                ]
             ]
         );
     }

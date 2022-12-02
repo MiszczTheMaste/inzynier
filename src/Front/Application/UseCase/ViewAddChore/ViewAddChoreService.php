@@ -33,10 +33,17 @@ final class ViewAddChoreService implements ViewAddChoreServiceInterface
             Request::create('http://127.0.0.1:8000/api/houses/' . $request->getHouseId() . '/rooms/' . $request->getRoomId() . '.json')
         );
 
+        $users = $this->symfonyInternalClient->sendRequest(
+            Request::create('http://127.0.0.1:8000/api/houses/' . $request->getHouseId() . '/users.json')
+        );
+
         $page = new Response(
             $this->view->render(
                 'add-chore-to-room',
-                json_decode($room->getContent(), true)
+                array_merge(
+                    json_decode($room->getContent(), true),
+                    json_decode($users->getContent(), true),
+                )
             )
         );
 

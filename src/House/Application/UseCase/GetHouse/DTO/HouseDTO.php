@@ -68,7 +68,7 @@ final class HouseDTO
             'id' => $this->getId(),
             'name' => $this->getName(),
             'users' => $this->getUsers()->toArray(),
-            'rooms' => $this->getRooms()->toArray(),
+            'rooms' => $this->getRooms()->toArray()
         ];
     }
 }

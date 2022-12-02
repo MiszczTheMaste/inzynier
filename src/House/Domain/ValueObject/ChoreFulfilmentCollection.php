@@ -19,10 +19,10 @@ final class ChoreFulfilmentCollection extends AbstractCollection
         return $this->collection;
     }
 
-    public function get(IdInterface $id):ChoreFulfilment
+    public function get(IdInterface $id): ChoreFulfilment
     {
-        foreach ($this->getCollection() as $item){
-            if($item->getId()->equals($id)){
+        foreach ($this->getCollection() as $item) {
+            if ($item->getId()->equals($id)) {
                 return $item;
             }
         }
@@ -35,7 +35,7 @@ final class ChoreFulfilmentCollection extends AbstractCollection
         return $this->getCollection()[0];
     }
 
-    public function add(ChoreFulfilment $item):void
+    public function add(ChoreFulfilment $item): void
     {
         $this->collection[] = $item;
     }

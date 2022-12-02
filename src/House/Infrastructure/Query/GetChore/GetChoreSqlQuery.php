@@ -23,7 +23,7 @@ final class GetChoreSqlQuery extends AbstractSqlQuery implements GetChoreQueryIn
     public function execute(string $choreId): ChoreDTO
     {
         $chore = $this->fetch(
-            'SELECT chores.id, chores.name, chores.days_interval, users.username
+            'SELECT chores.id, chores.name, chores.days_interval, users.username, users.id as user_id
             FROM chores
             INNER JOIN users on chores.user_id = users.id
             WHERE chores.id = :chore_id',
@@ -56,6 +56,7 @@ final class GetChoreSqlQuery extends AbstractSqlQuery implements GetChoreQueryIn
             (string)$chore->getFieldValue('name'),
             (int)$chore->getFieldValue('days_interval'),
             (string)$chore->getFieldValue('username'),
+            (string)$chore->getFieldValue('user_id'),
             $fulfilmentCollection,
             $fulfilmentCollection->getActive(),
         );

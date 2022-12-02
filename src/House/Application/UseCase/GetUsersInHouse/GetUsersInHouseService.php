@@ -26,7 +26,7 @@ final class GetUsersInHouseService implements GetUsersInHouseServiceInterface
             HttpCodes::STATUS_TEXT[HttpCodes::HTTP_OK],
             HttpCodes::HTTP_OK,
             [
-                'house_users' => $this->getUsersInHouseQuery->execute($request->getHouseId())
+                'house_users' => $this->getUsersInHouseQuery->execute($request->getHouseId())->toArray()
             ]
         );
     }

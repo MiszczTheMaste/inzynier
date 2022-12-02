@@ -8,6 +8,7 @@ use App\House\Application\UseCase\GetHouse\GetHouseRequest;
 use App\House\Application\UseCase\GetHouse\GetHouseServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,10 +31,15 @@ final class GetHouseAction
                 $response->getCode()
             );
         } catch (Exception) {
-            return new JsonResponse(
-                ['message' => 'Unknown error has occurred'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Unknown error has occurred'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            $request->getSession()->getFlashBag()->add('error', 'Wystąpił problem.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }
 }

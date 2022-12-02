@@ -12,16 +12,20 @@ final class RoomDTO
 
     private string $icon;
 
+    private int $choresAfterDeadline;
+
     /**
      * @param string $id
      * @param string $name
      * @param string $icon
+     * @param int $choresAfterDeadline
      */
-    public function __construct(string $id, string $name, string $icon)
+    public function __construct(string $id, string $name, string $icon, int $choresAfterDeadline)
     {
         $this->id = $id;
         $this->name = $name;
         $this->icon = $icon;
+        $this->choresAfterDeadline = $choresAfterDeadline;
     }
 
     /**
@@ -46,5 +50,13 @@ final class RoomDTO
     public function getIcon(): string
     {
         return $this->icon;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChoresAfterDeadline(): int
+    {
+        return $this->choresAfterDeadline;
     }
 }

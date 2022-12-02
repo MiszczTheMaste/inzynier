@@ -52,10 +52,14 @@ final class AddUserToHouseAction
 
             return new RedirectResponse($request->get('redirect_address') ?? '/');
         } catch (Exception) {
-            return new JsonResponse(
-                ['message' => 'Unknown error has occurred'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Unknown error has occurred'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+            $request->getSession()->getFlashBag()->add('error', 'Nie udało się dodać lokatora.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }
 }

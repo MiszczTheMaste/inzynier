@@ -8,10 +8,11 @@ use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseRequest;
 use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetUsersInHouse
+final class GetUsersInHouseAction
 {
     private GetUsersInHouseServiceInterface $service;
 
@@ -34,10 +35,15 @@ final class GetUsersInHouse
                 $response->getCode()
             );
         } catch (Exception) {
-            return new JsonResponse(
-                ['message' => 'Unknown error has occurred'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Unknown error has occurred'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            $request->getSession()->getFlashBag()->add('error', 'Wystąpił problem.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }
 }

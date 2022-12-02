@@ -83,16 +83,36 @@
             h3 > span:nth-child(6){
                 animation: rainbow 0.8s 0.6s infinite linear;
             }
+            .flash-notice{
+                position: absolute;
+                color: #ff9999;
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                padding-top: 75px;
+                padding-bottom: 75px;
+                background-color: #0a0a0a99;
+            }
         </style>
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script>
+            function hide(elem){
+                elem.style.display = 'none';
+            }
+        </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
+        {% for message in app.flashes('error') %}
+            <div class="flash-notice" onclick="hide(this)">
+                {{ message }}
+            </div>
+        {% endfor %}
         <h1>ElemeleApp</h1>
         <h2>Cześć, {{ owner_username }}</h2>
         <h3><span>☆</span> <span>☆</span> <span>☆</span> Twoje mieszkania <span>☆</span> <span>☆</span> <span>☆</span></h3>

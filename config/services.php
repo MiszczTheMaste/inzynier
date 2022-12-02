@@ -48,6 +48,7 @@ use App\House\Action\GetChore\GetChoreAction;
 use App\House\Action\GetRoom\GetRoomAction;
 use App\House\Action\GetHouse\GetHouseAction;
 use App\House\Action\GetHousesForUser\GetHousesForUserAction;
+use App\House\Action\GetUsersInHouse\GetUsersInHouseAction;
 use App\House\Application\Query\GetHousesForUserQueryInterface;
 use App\House\Application\Query\GetRoomNameQueryInterface;
 use App\House\Application\Query\GetUserIdQueryInterface;
@@ -73,6 +74,9 @@ use App\House\Application\UseCase\GetHouse\GetHouseServiceInterface;
 use App\House\Application\UseCase\GetHouse\Query\GetHouseQueryInterface;
 use App\House\Application\UseCase\GetHousesForUser\GetHousesForUserService;
 use App\House\Application\UseCase\GetHousesForUser\GetHousesForUserServiceInterface;
+use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseService;
+use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseServiceInterface;
+use App\House\Application\UseCase\GetUsersInHouse\Query\GetUsersInHouseQueryInterface;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 use App\House\Infrastructure\Query\GetChore\GetChoreSqlQuery;
 use App\House\Infrastructure\Query\GetChores\GetChoresSqlQuery;
@@ -81,6 +85,7 @@ use App\House\Infrastructure\Query\GetHousesForUser\GetHousesForUserSqlQuery;
 use App\House\Infrastructure\Query\GetRoomNameSqlQuery;
 use App\House\Infrastructure\Query\GetUserIdSqlQuery;
 use App\House\Infrastructure\Query\GetUsernameByIdQuery;
+use App\House\Infrastructure\Query\GetUsersInHouse\GetUsersInHouseSqlQuery;
 use App\House\Infrastructure\Repository\HouseEventRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -391,7 +396,8 @@ return static function (ContainerConfigurator $configurator) {
     $services->set(GetChoreServiceInterface::class, GetChoreService::class)
         ->args([
             service(GetChoreQueryInterface::class),
-            service(GetRoomNameQueryInterface::class)
+            service(GetRoomNameQueryInterface::class),
+            service(GetCurrentlyLoggedInUserIdQueryInterface::class)
         ]);
 
     $services->set(GetChoreQueryInterface::class, GetChoreSqlQuery::class)
@@ -408,5 +414,21 @@ return static function (ContainerConfigurator $configurator) {
     $services->set(AddNewFulfilmentServiceInterface::class, AddNewFulfilmentService::class)
         ->args([
             service(HouseRepositoryInterface::class)
+        ]);
+
+    $services->set(GetUsersInHouseAction::class)
+        ->tag('controller.service_arguments')
+        ->args([
+            service(GetUsersInHouseServiceInterface::class)
+        ]);
+
+    $services->set(GetUsersInHouseServiceInterface::class, GetUsersInHouseService::class)
+        ->args([
+            service(GetUsersInHouseQueryInterface::class)
+        ]);
+
+    $services->set(GetUsersInHouseQueryInterface::class, GetUsersInHouseSqlQuery::class)
+        ->args([
+            service(DatabaseAbstractionLayerInterface::class)
         ]);
 };

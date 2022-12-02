@@ -42,11 +42,7 @@ return static function (RoutingConfigurator $routes) {
         ->controller(ViewAddChoreAction::class)
         ->methods(['GET']);
 
-    $routes->add('view.house.room.add-chores', '/houses/{house_id}/rooms/{room_id}/chore')
-        ->controller(ViewAddChoreAction::class)
-        ->methods(['GET']);
-
-    $routes->add('view.house.room.add-chores', '/houses/{house_id}/rooms/{room_id}/chores/{chore_id}')
+    $routes->add('view.house.room.chore', '/houses/{house_id}/rooms/{room_id}/chores/{chore_id}')
         ->controller(ViewChoreAction::class)
         ->methods(['GET']);
 };

@@ -112,6 +112,16 @@
                 font-size: 80px;
                 margin-top: 75px;
             }
+            .flash-notice{
+                position: absolute;
+                color: #ff9999;
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                padding-top: 75px;
+                padding-bottom: 75px;
+                background-color: #0a0a0a99;
+            }
         </style>
     {% endblock %}
 
@@ -131,11 +141,21 @@
                 }
             }
         </script>
+        <script>
+            function hide(elem){
+                elem.style.display = 'none';
+            }
+        </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
+        {% for message in app.flashes('error') %}
+            <div class="flash-notice" onclick="hide(this)">
+                {{ message }}
+            </div>
+        {% endfor %}
         <a href="/houses/{{ house.id }}/rooms/{{ room.id }}"><div class="back-button"><</div></a>
         <a href="/"><h1>ElemeleApp</h1></a>
         <h2>{{ room.name }}</h2>
@@ -147,12 +167,14 @@
         <section>
             <span>Aktualny termin</span>
             <span>{{ chore.current_fulfilment.deadline }}</span>
-            <form method="post"
-                  action="/api/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}/fulfilments/{{ chore.current_fulfilment.id }}.form">
-                <input name="finished" value="1" type="number" style="display: none">
-                <input type="text" name="redirect_address" value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}" style="display: none">
-                <input class='end-button' type="submit" value="Potwierdź wykonanie">
-            </form>
+            {% if chore.responsible_user_id == user.id %}
+                <form method="post"
+                      action="/api/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}/fulfilments/{{ chore.current_fulfilment.id }}.form">
+                    <input name="finished" value="1" type="number" style="display: none">
+                    <input type="text" name="redirect_address" value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}" style="display: none">
+                    <input class='end-button' type="submit" value="Potwierdź wykonanie">
+                </form>
+            {% endif %}
         </section>
         <h3 onclick="showHistory(this)" class="history-title">Historia
             <div>

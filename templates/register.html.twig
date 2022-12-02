@@ -67,17 +67,36 @@
                 position: absolute;
                 bottom: 0;
             }
+            .flash-notice{
+                position: absolute;
+                color: #ff9999;
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                padding-top: 75px;
+                padding-bottom: 75px;
+                background-color: #0a0a0a99;
+            }
         </style>
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-
+        <script>
+            function hide(elem){
+                elem.style.display = 'none';
+            }
+        </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
+        {% for message in app.flashes('error') %}
+            <div class="flash-notice" onclick="hide(this)">
+                {{ message }}
+            </div>
+        {% endfor %}
         <a href="/"><h1>ElemeleApp</h1></a>
             <form method="post" action="/api/register.form">
                 <section>

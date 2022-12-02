@@ -86,6 +86,35 @@
             h3 > div > span:nth-child(3){
                 animation: rainbow 2s 0.6s infinite linear;
             }
+            .chores-waring{
+                background: repeating-linear-gradient(
+                    45deg,
+                    #00000000,
+                    #00000000 30px,
+                    #990000 30px,
+                    #990000 60px
+                );
+            }
+            .flash-notice{
+                position: absolute;
+                color: #ff9999;
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                padding-top: 75px;
+                padding-bottom: 75px;
+                background-color: #0a0a0a99;
+            }
+            .flash-notice{
+                position: absolute;
+                color: #ff9999;
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                padding-top: 75px;
+                padding-bottom: 75px;
+                background-color: #0a0a0a99;
+            }
         </style>
     {% endblock %}
 
@@ -114,12 +143,20 @@
                     buttonElem.querySelector('div').style.display = 'none';
                 }
             }
+            function hide(elem){
+                elem.style.display = 'none';
+            }
         </script>
     {% endblock %}
 </head>
 <body>
 {% block body %}
     <main>
+        {% for message in app.flashes('error') %}
+            <div class="flash-notice" onclick="hide(this)">
+                {{ message }}
+            </div>
+        {% endfor %}
         <a href="/"><h1>ElemeleApp</h1></a>
         <h2>{{ house.name }}</h2>
         <h3 onclick="showRooms(this)">Pokoje w mieszkaniu
@@ -131,7 +168,7 @@
         </h3>
         <section class="house-wrap" id="roomsSection" style="display: none">
             {% for room in house.rooms %}
-                <a href="/houses/{{ house.id }}/rooms/{{ room.id }}">
+                <a href="/houses/{{ house.id }}/rooms/{{ room.id }}" {% if room.chores_after_deadline > 0 %} class="chores-waring" {% endif %}>
                     <span>{{ room.name }}</span>
                 </a>
             {% endfor %}

@@ -12,7 +12,7 @@ use App\House\Application\DTO\UserDTO;
 use App\House\Application\DTO\UserDTOCollection;
 use App\House\Application\UseCase\GetUsersInHouse\Query\GetUsersInHouseQueryInterface;
 
-final class GetUsersInHouseQuery extends AbstractSqlQuery implements GetUsersInHouseQueryInterface
+final class GetUsersInHouseSqlQuery extends AbstractSqlQuery implements GetUsersInHouseQueryInterface
 {
     /**
      * @throws DatabaseException
@@ -23,7 +23,7 @@ final class GetUsersInHouseQuery extends AbstractSqlQuery implements GetUsersInH
     {
         $users = $this->fetchAll(
             'SELECT username, users.id FROM users INNER JOIN houses_users hu on users.id = hu.user_id WHERE hu.house_id = :house_id',
-            ['house_id' => $houseId]
+            [':house_id' => $houseId]
         );
 
         $userCollection = [];

@@ -14,6 +14,8 @@ final class ChoreDTO
 
     private string $responsibleUser;
 
+    private string $responsibleUserId;
+
     private ChoreFulfilmentDTOCollection $fulfilments;
 
     private ChoreFulfilmentDTO $currentFulfilment;
@@ -23,15 +25,17 @@ final class ChoreDTO
      * @param string $name
      * @param int $interval
      * @param string $responsibleUser
+     * @param string $responsibleUserId
      * @param ChoreFulfilmentDTOCollection $fulfilments
      * @param ChoreFulfilmentDTO $currentFulfilment
      */
-    public function __construct(string $id, string $name, int $interval, string $responsibleUser, ChoreFulfilmentDTOCollection $fulfilments, ChoreFulfilmentDTO $currentFulfilment)
+    public function __construct(string $id, string $name, int $interval, string $responsibleUser, string $responsibleUserId, ChoreFulfilmentDTOCollection $fulfilments, ChoreFulfilmentDTO $currentFulfilment)
     {
         $this->id = $id;
         $this->name = $name;
         $this->interval = $interval;
         $this->responsibleUser = $responsibleUser;
+        $this->responsibleUserId = $responsibleUserId;
         $this->fulfilments = $fulfilments;
         $this->currentFulfilment = $currentFulfilment;
     }
@@ -52,7 +56,6 @@ final class ChoreDTO
         return $this->name;
     }
 
-
     /**
      * @return int
      */
@@ -67,6 +70,14 @@ final class ChoreDTO
     public function getResponsibleUser(): string
     {
         return $this->responsibleUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsibleUserId(): string
+    {
+        return $this->responsibleUserId;
     }
 
     /**
@@ -92,9 +103,10 @@ final class ChoreDTO
             'name' => $this->getName(),
             'interval' => $this->getInterval(),
             'responsible_user' => $this->getResponsibleUser(),
+            'responsible_user_id' => $this->getResponsibleUserId(),
             'fulfilments' => array_map(
                 function (ChoreFulfilmentDTO $fulfilment) {
-                    if(true === $fulfilment->isFinished()){
+                    if (true === $fulfilment->isFinished()) {
                         return [
                             'id' => $fulfilment->getId(),
                             'deadline' =>  $fulfilment->getDeadline(),
