@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace App\House\Infrastructure\Query\GetChores;
 
+use App\Core\Domain\Exception\DatabaseException;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
+use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Infrastructure\Query\AbstractSqlQuery;
-use App\House\Application\UseCase\GetChores\DTO\ChoreDTO;
-use App\House\Application\UseCase\GetChores\DTO\ChoreDTOCollection;
-use App\House\Application\UseCase\GetChores\Query\GetChoresQueryInterface;
+use App\House\Application\UseCase\GetRoom\DTO\ChoreDTO;
+use App\House\Application\UseCase\GetRoom\DTO\ChoreDTOCollection;
+use App\House\Application\UseCase\GetRoom\Query\GetChoresQueryInterface;
 use DateTimeImmutable;
 
 final class GetChoresSqlQuery extends AbstractSqlQuery implements GetChoresQueryInterface
 {
+    /**
+     * @throws DatabaseException
+     * @throws ItemNotFoundInCollectionException
+     * @throws InvalidObjectTypeInCollectionException
+     */
     public function execute(string $roomId): ChoreDTOCollection
     {
         $result = $this->fetchAll(

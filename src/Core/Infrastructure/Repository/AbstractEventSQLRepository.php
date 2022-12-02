@@ -136,6 +136,9 @@ abstract class AbstractEventSQLRepository
         $this->$handler($event);
     }
 
+    /**
+     * @throws InvalidObjectTypeInCollectionException
+     */
     private function eventHasHandler(EventInterface $event): bool
     {
         return $this->implementedEvents()->collectionHasKey($event::class);

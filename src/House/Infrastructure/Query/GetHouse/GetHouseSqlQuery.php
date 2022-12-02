@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace App\House\Infrastructure\Query\GetHouse;
 
+use App\Core\Domain\Exception\DatabaseException;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
+use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Infrastructure\Query\AbstractSqlQuery;
+use App\House\Application\DTO\UserDTO;
+use App\House\Application\DTO\UserDTOCollection;
+use App\House\Application\UseCase\GetHouse\DTO\HouseDTO;
 use App\House\Application\UseCase\GetHouse\DTO\RoomDTO;
 use App\House\Application\UseCase\GetHouse\DTO\RoomDTOCollection;
-use App\House\Application\UseCase\GetHouse\DTO\HouseDTO;
-use App\House\Application\UseCase\GetHouse\DTO\UserDTO;
-use App\House\Application\UseCase\GetHouse\DTO\UserDTOCollection;
 use App\House\Application\UseCase\GetHouse\Query\GetHouseQueryInterface;
 
 final class GetHouseSqlQuery extends AbstractSqlQuery implements GetHouseQueryInterface
 {
+    /**
+     * @throws DatabaseException
+     * @throws ItemNotFoundInCollectionException
+     * @throws InvalidObjectTypeInCollectionException
+     */
     public function execute(string $id): HouseDTO
     {
         $house = $this->fetch(

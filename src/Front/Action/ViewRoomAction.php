@@ -11,19 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ViewRoomAction
 {
-    private ViewRoomServiceInterface $viewHomepageService;
+    private ViewRoomServiceInterface $service;
 
     /**
-     * @param ViewRoomServiceInterface $viewHomepageService
+     * @param ViewRoomServiceInterface $service
      */
-    public function __construct(ViewRoomServiceInterface $viewHomepageService)
+    public function __construct(ViewRoomServiceInterface $service)
     {
-        $this->viewHomepageService = $viewHomepageService;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): Response
     {
-        $response = $this->viewHomepageService->handle(
+        $response = $this->service->handle(
             new ViewRoomRequest(
                 $request->get('house_id'),
                 $request->get('room_id')

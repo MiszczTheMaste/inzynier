@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Elemele{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            html,body{
+                margin: 0;
+                background-color: #0f0f0f;
+                color: #ffffff;
+                font-family: Arial, sans-serif;
+            }
+            main{
+                width: 100vw;
+                height: 100vh;
+                top: 0;
+                position: absolute;
+            }
+            section{
+                width: 100%;
+            }
+            h1{
+                font-family: Impact, sans-serif;
+                text-align: center;
+                font-size: 80px;
+                margin-top: 75px;
+            }
+            h2{
+                text-align: center;
+                font-size: 48px;
+            }
+            h3{
+                text-align: center;
+                font-size: 32px;
+            }
+            a{
+                color: #ffffff;
+                text-decoration: none;
+                text-align: center;
+                font-size: 48px;
+            }
+            .history-wrap{
+                display: flex;
+                flex-wrap: wrap;
+                align-content: start;
+                justify-content: flex-start;
+            }
+            label {
+                color: #fff;
+                display: block;
+                width: 100%;
+                text-align: center;
+                font-size: 48px;
+            }
+            section span {
+                width: 100%;
+                border: none;
+                display: block;
+                text-align: center;
+                font-size: 48px;
+            }
+            .end-button{
+                background-color: #273927;
+                width: 100%;
+                margin-top: 50px;
+                height: 150px;
+                font-size: 48px;
+                color: #fff;
+                border: none;
+            }
+            @keyframes rainbow {
+                0% {color: #ff9999}
+                10% {color: #99ff99}
+                20% {color: #9999ff}
+                30% {color: #ff9999}
+                40% {color: #fff}
+                100% {color: #fff}
+            }
+            h3 > div{
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            h3 > div > span{
+                display: block;
+                width: 100%;
+            }
+            h3 > div > span:nth-child(1){
+                animation: rainbow 2s 0.1s infinite linear;
+            }
+            h3 > div > span:nth-child(2){
+                animation: rainbow 2s 0.4s infinite linear;
+            }
+            h3 > div > span:nth-child(3){
+                animation: rainbow 2s 0.6s infinite linear;
+            }
+            .history-title{
+                font-size: 48px;
+            }
+            .back-button{
+                position: absolute;
+                top: 0;
+                left: 50px;
+                font-size: 80px;
+                margin-top: 75px;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+
+        <script>
+            function showHistory(buttonElem){
+                let elem = document.querySelector('#history');
+
+                if(elem.style.display === 'flex'){
+                    elem.style.display = 'none';
+                    buttonElem.querySelector('div').style.display = 'flex';
+                } else {
+                    elem.style.display = 'flex';
+                    buttonElem.querySelector('div').style.display = 'none';
+                }
+            }
+        </script>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <main>
+        <a href="/houses/{{ house.id }}/rooms/{{ room.id }}"><div class="back-button"><</div></a>
+        <a href="/"><h1>ElemeleApp</h1></a>
+        <h2>{{ room.name }}</h2>
+        <h3>{{ chore.name }}</h3>
+        <section>
+            <span>{{ chore.responsible_user }}</span>
+            <span>Interwał: {{ chore.interval }}dni</span>
+        </section>
+        <section>
+            <span>Aktualny termin</span>
+            <span>{{ chore.current_fulfilment.deadline }}</span>
+            <form method="post"
+                  action="/api/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}/fulfilments/{{ chore.current_fulfilment.id }}.form">
+                <input name="finished" value="1" type="number" style="display: none">
+                <input type="text" name="redirect_address" value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}" style="display: none">
+                <input class='end-button' type="submit" value="Potwierdź wykonanie">
+            </form>
+        </section>
+        <h3 onclick="showHistory(this)" class="history-title">Historia
+            <div>
+                <span>▼</span>
+                <span>▼</span>
+                <span>▼</span>
+            </div>
+        </h3>
+        <section class="history-wrap" id="history"  style="display: none">
+            {% for fulfilment in chore.fulfilments %}
+                {% if fulfilment %}
+                    <span>{{ fulfilment.deadline }} {{ fulfilment.rate }}</span>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}
+</body>
+</html>

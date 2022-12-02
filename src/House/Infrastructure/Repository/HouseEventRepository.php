@@ -21,6 +21,8 @@ use App\House\Domain\Entity\House;
 use App\House\Domain\Entity\Room;
 use App\House\Domain\Event\ChoreCreatedEvent;
 use App\House\Domain\Event\ChoreRemovedEvent;
+use App\House\Domain\Event\FulfilmentAddedEvent;
+use App\House\Domain\Event\FulfilmentFinishedEvent;
 use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
@@ -56,6 +58,8 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         $handlers->addHandler('handleHouseRemovedEvent', HouseRemovedEvent::class);
         $handlers->addHandler('handleRoomRemovedEvent', RoomRemovedEvent::class);
         $handlers->addHandler('handleUserAddedToHouseEvent', UserAddedToHouseEvent::class);
+        $handlers->addHandler('handleFulfilmentAddedEvent', FulfilmentAddedEvent::class);
+        $handlers->addHandler('handleFulfilmentFinishedEvent', FulfilmentFinishedEvent::class);
 
         return $handlers;
     }
@@ -142,6 +146,9 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         );
     }
 
+    /**
+     * @throws DatabaseException
+     */
     protected function handleRoomCreatedEvent(RoomCreatedEvent $event): void
     {
         $this->execute(
@@ -160,6 +167,9 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
     }
 
 
+    /**
+     * @throws DatabaseException
+     */
     protected function handleChoreCreatedEvent(ChoreCreatedEvent $event): void
     {
         $this->execute(
@@ -191,6 +201,9 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         );
     }
 
+    /**
+     * @throws DatabaseException
+     */
     protected function handleUserAddedToHouseEvent(UserAddedToHouseEvent $event): void
     {
         $this->execute(
@@ -201,6 +214,37 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
             [
                 ':house_id' => $event->getHouseId()->toString(),
                 ':user_id' => $event->getUserId()->toString(),
+            ]
+        );
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    protected function handleFulfilmentAddedEvent(FulfilmentAddedEvent $event): void
+    {
+        $this->execute(
+            'INSERT INTO chores_fulfilments 
+                (id, chore_id, rate, finished, deadline)
+                VALUES 
+                (:id, :chore_id, 0, false, :deadline)',
+            [
+                ':id' => $event->getId()->toString(),
+                ':chore_id' => $event->getChoreId()->toString(),
+                ':deadline' => $event->getDeadline()->format('Y-m-d H:i:s'),
+            ]
+        );
+    }
+
+    /**
+     * @throws DatabaseException
+     */
+    protected function handleFulfilmentFinishedEvent(FulfilmentFinishedEvent $event): void
+    {
+        $this->execute(
+            'UPDATE chores_fulfilments SET finished = true WHERE id = :id',
+            [
+                ':id' => $event->getId()->toString()
             ]
         );
     }
@@ -301,6 +345,7 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         icon_id,
         user_id,
         creation_date,
+        name,
         days_interval,
         removed
         FROM chores

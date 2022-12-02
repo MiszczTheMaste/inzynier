@@ -6,6 +6,9 @@ namespace App\Front\Application\View;
 
 use Exception;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class TwigView
 {
@@ -20,6 +23,11 @@ final class TwigView
         $this->twig = $twig;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function render(string $name, array $context = []): string
     {
         try {

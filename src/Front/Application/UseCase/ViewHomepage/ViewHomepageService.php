@@ -7,10 +7,14 @@ namespace App\Front\Application\UseCase\ViewHomepage;
 use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use App\Core\Domain\Exception\DatabaseException;
 use App\Core\Infrastructure\HttpClient\SymfonyInternalClient;
 use App\Front\Application\View\TwigView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class ViewHomepageService implements ViewHomepageServiceInterface
 {
@@ -32,13 +36,21 @@ final class ViewHomepageService implements ViewHomepageServiceInterface
         $this->getCurrentlyLoggedInUserIdQuery = $getCurrentlyLoggedInUserIdQuery;
     }
 
+    /**
+     * @param ViewHomepageRequest $request
+     * @return UseCasePayload
+     * @throws DatabaseException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function handle(ViewHomepageRequest $request): UseCasePayload
     {
         if (is_null($this->getCurrentlyLoggedInUserIdQuery->execute())) {
             $page = new Response($this->view->render('base'));
         } else {
             $houses = $this->symfonyInternalClient->sendRequest(
-                Request::create('http://127.0.0.1:8000/api/houses.json',)
+                Request::create('http://127.0.0.1:8000/api/houses.json')
             );
 
             $page = new Response(

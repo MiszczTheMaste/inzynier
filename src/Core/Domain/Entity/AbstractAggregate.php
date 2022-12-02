@@ -6,12 +6,16 @@ namespace App\Core\Domain\Entity;
 
 use App\Core\Domain\Event\EventCollection;
 use App\Core\Domain\Event\EventInterface;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 
 abstract class AbstractAggregate extends AbstractEntity
 {
     private EventCollection $events;
 
+    /**
+     * @throws InvalidObjectTypeInCollectionException
+     */
     public function __construct(IdInterface $id)
     {
         parent::__construct($id);

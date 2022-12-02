@@ -84,6 +84,13 @@
                 position: absolute;
                 bottom: 0;
             }
+            .back-button{
+                position: absolute;
+                top: 0;
+                left: 50px;
+                font-size: 80px;
+                margin-top: 75px;
+            }
         </style>
     {% endblock %}
 
@@ -94,6 +101,7 @@
 <body>
 {% block body %}
     <main>
+        <a href="/houses/{{ house.id }}"><div class="back-button"><</div></a>
         <a href="/"><h1>ElemeleApp</h1></a>
         <h2>Dodawanie lokatorów do mieszkania<br>{{ house.name }}</h2>
         <form method="post" action="/api/houses/{{ house.id }}/users.form">
@@ -105,6 +113,7 @@
             <section style="display: none">
                 <label for="icon_id">ikona</label>
                 <input type="text" name="icon_id" value="a06478fe-92fa-4cd9-a583-03f308e36f60">
+                <input type="text" name="redirect_address" value="/houses/{{ house.id }}">
             </section>
         </form>
     </main>

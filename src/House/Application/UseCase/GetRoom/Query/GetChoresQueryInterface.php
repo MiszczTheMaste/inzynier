@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\House\Application\UseCase\GetChores\Query;
+namespace App\House\Application\UseCase\GetRoom\Query;
 
-use App\House\Application\UseCase\GetChores\DTO\ChoreDTOCollection;
+use App\House\Application\UseCase\GetRoom\DTO\ChoreDTOCollection;
 
 interface GetChoresQueryInterface
 {

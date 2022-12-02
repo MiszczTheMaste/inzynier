@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\House\Application\UseCase\GetChores\DTO;
+namespace App\House\Application\UseCase\GetRoom\DTO;
 
 use App\Core\Domain\ValueObject\AbstractCollection;
 

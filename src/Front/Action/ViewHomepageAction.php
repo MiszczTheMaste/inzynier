@@ -11,19 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ViewHomepageAction
 {
-    private ViewHomepageServiceInterface $viewHomepageService;
+    private ViewHomepageServiceInterface $service;
 
     /**
-     * @param ViewHomepageServiceInterface $viewHomepageService
+     * @param ViewHomepageServiceInterface $service
      */
-    public function __construct(ViewHomepageServiceInterface $viewHomepageService)
+    public function __construct(ViewHomepageServiceInterface $service)
     {
-        $this->viewHomepageService = $viewHomepageService;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): Response
     {
-        $response = $this->viewHomepageService->handle(new ViewHomepageRequest());
+        $response = $this->service->handle(new ViewHomepageRequest());
         return $response->getPayload()['page'];
     }
 }

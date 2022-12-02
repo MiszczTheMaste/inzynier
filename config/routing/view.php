@@ -1,6 +1,8 @@
 <?php
 
+use App\Front\Action\ViewAddChoreAction;
 use App\Front\Action\ViewAddUserAction;
+use App\Front\Action\ViewChoreAction;
 use App\Front\Action\ViewCreateRoomAction;
 use App\Front\Action\ViewHomepageAction;
 use App\Front\Action\ViewHouseAction;
@@ -32,7 +34,19 @@ return static function (RoutingConfigurator $routes) {
         ->controller(ViewCreateRoomAction::class)
         ->methods(['GET']);
 
-    $routes->add('view.house.room.chores', '/houses/{house_id}/rooms/{room_id}')
+    $routes->add('view.house.room', '/houses/{house_id}/rooms/{room_id}')
         ->controller(ViewRoomAction::class)
+        ->methods(['GET']);
+
+    $routes->add('view.house.room.add-chores', '/houses/{house_id}/rooms/{room_id}/create-chore')
+        ->controller(ViewAddChoreAction::class)
+        ->methods(['GET']);
+
+    $routes->add('view.house.room.add-chores', '/houses/{house_id}/rooms/{room_id}/chore')
+        ->controller(ViewAddChoreAction::class)
+        ->methods(['GET']);
+
+    $routes->add('view.house.room.add-chores', '/houses/{house_id}/rooms/{room_id}/chores/{chore_id}')
+        ->controller(ViewChoreAction::class)
         ->methods(['GET']);
 };

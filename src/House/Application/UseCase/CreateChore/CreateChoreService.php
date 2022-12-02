@@ -54,7 +54,7 @@ final class CreateChoreService implements CreateChoreServiceInterface
             $this->repository->generateId(),
             $this->repository->generateId(),
             Uuid::fromString($request->getRoomId()),
-            new DaysInterval($request->getField('interval')),
+            new DaysInterval((int) $request->getField('interval')),
             new DateTimeImmutable($request->getField('initial_date')),
             Uuid::fromString($request->getField('icon_id')),
             Uuid::fromString($request->getField('user_id')),

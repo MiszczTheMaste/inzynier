@@ -10,6 +10,7 @@ use App\Core\Domain\Exception\DatabaseException;
 use App\Core\Domain\Exception\InvalidIdException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\Uuid;
+use App\House\Domain\Exception\ChoreNotFoundException;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
@@ -36,6 +37,7 @@ final class RemoveChoreService implements RemoveChoreServiceInterface
      * @throws InvalidIdException
      * @throws InvalidObjectTypeInCollectionException
      * @throws RoomNotFoundException
+     * @throws ChoreNotFoundException
      */
     public function handle(RemoveChoreRequest $request): UseCasePayload
     {

@@ -50,7 +50,7 @@ final class AddUserToHouseAction
                 );
             }
 
-            return new RedirectResponse('/');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         } catch (Exception) {
             return new JsonResponse(
                 ['message' => 'Unknown error has occurred'],

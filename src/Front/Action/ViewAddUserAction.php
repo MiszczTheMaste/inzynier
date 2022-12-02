@@ -11,19 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ViewAddUserAction
 {
-    private ViewAddUserServiceInterface $viewHomepageService;
+    private ViewAddUserServiceInterface $service;
 
     /**
-     * @param ViewAddUserServiceInterface $viewHomepageService
+     * @param ViewAddUserServiceInterface $service
      */
-    public function __construct(ViewAddUserServiceInterface $viewHomepageService)
+    public function __construct(ViewAddUserServiceInterface $service)
     {
-        $this->viewHomepageService = $viewHomepageService;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): Response
     {
-        $response = $this->viewHomepageService->handle(new ViewAddUserRequest($request->get('house_id')));
+        $response = $this->service->handle(new ViewAddUserRequest($request->get('house_id')));
         return $response->getPayload()['page'];
     }
 }

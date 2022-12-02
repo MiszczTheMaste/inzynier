@@ -29,14 +29,14 @@ final class ViewRoomService implements ViewRoomServiceInterface
 
     public function handle(ViewRoomRequest $request): UseCasePayload
     {
-        $houses = $this->symfonyInternalClient->sendRequest(
-            Request::create('/api/houses/' . $request->getHouseId() . '/rooms/' . $request->getRoomId() . '/chores.json')
+        $room = $this->symfonyInternalClient->sendRequest(
+            Request::create('/api/houses/' . $request->getHouseId() . '/rooms/' . $request->getRoomId() . '.json')
         );
 
         $page = new Response(
             $this->view->render(
                 'room',
-                json_decode($houses->getContent(), true)
+                json_decode($room->getContent(), true)
             )
         );
 

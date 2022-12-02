@@ -51,6 +51,11 @@ final class ChoreFulfilment extends AbstractEntity
         return $this->finished;
     }
 
+    public function finish(): void
+    {
+        $this->finished = true;
+    }
+
     /**
      * @return Rate
      */

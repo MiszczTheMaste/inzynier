@@ -55,9 +55,20 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                flex-wrap: wrap;
                 width: 50vw;
                 height: 50vw;
                 border: solid 2px #fff;
+            }
+            .house-wrap > a > span{
+                width: 100%;
+            }
+            .back-button{
+                position: absolute;
+                top: 0;
+                left: 50px;
+                font-size: 80px;
+                margin-top: 75px;
             }
         </style>
     {% endblock %}
@@ -93,17 +104,20 @@
 <body>
 {% block body %}
     <main>
+        <a href="/houses/{{ house.id }}"><div class="back-button"><</div></a>
         <a href="/"><h1>ElemeleApp</h1></a>
-        <h2>{{ room_name }}</h2>
-
+        <h2>{{ room.name }}</h2>
         <h3 onclick="showRooms(this)">Obowiązki w pokoju</h3>
         <section class="house-wrap" id="roomsSection">
             {% for chore in chores %}
-                <a href="#">
+                <a href="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}">
                     <span>{{ chore.name }}</span>
+                    <span>{{ chore.deadline }}</span>
+                    <span>co {{ chore.interval }}dni</span>
+                    <span>{{ chore.responsible_user }}</span>
                 </a>
             {% endfor %}
-            <a href="#">
+            <a href="/houses/{{ house.id }}/rooms/{{ room.id }}/create-chore">
                 <span>+</span>
             </a>
         </section>

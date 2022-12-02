@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\House\Application\UseCase\GetChores;
+namespace App\House\Application\UseCase\GetRoom;
 
-final class GetChoresRequest
+final class GerRoomRequest
 {
     private string $houseId;
 

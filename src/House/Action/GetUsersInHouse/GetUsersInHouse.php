@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\House\Action\GetChores;
+namespace App\House\Action\GetUsersInHouse;
 
-use App\House\Application\UseCase\GetChores\GetChoresRequest;
-use App\House\Application\UseCase\GetChores\GetChoresServiceInterface;
+use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseRequest;
+use App\House\Application\UseCase\GetUsersInHouse\GetUsersInHouseServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetChoresAction
+final class GetUsersInHouse
 {
-    private GetChoresServiceInterface $service;
+    private GetUsersInHouseServiceInterface $service;
 
-    public function __construct(GetChoresServiceInterface $service)
+    public function __construct(GetUsersInHouseServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -24,9 +24,8 @@ final class GetChoresAction
     {
         try {
             $response = $this->service->handle(
-                new GetChoresRequest(
-                    $request->get('house_id'),
-                    $request->get('room_id')
+                new GetUsersInHouseRequest(
+                    $request->get('house_id')
                 )
             );
 

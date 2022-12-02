@@ -6,8 +6,12 @@ namespace App\House\Application\UseCase\AddUserToHouse;
 
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use App\Core\Domain\Exception\DatabaseException;
+use App\Core\Domain\Exception\InvalidIdException;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\Uuid;
 use App\House\Application\Query\GetUserIdQueryInterface;
+use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
 final class AddUserToHouseService implements AddUserToHouseServiceInterface
@@ -30,6 +34,12 @@ final class AddUserToHouseService implements AddUserToHouseServiceInterface
     }
 
 
+    /**
+     * @throws DatabaseException
+     * @throws RoomNotFoundException
+     * @throws InvalidObjectTypeInCollectionException
+     * @throws InvalidIdException
+     */
     public function handle(AddUserToHouseRequest $request): UseCasePayload
     {
         $userId = $this->getUserIdQuery->execute($request->getField('username'));

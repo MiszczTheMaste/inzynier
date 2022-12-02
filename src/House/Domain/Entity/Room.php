@@ -6,6 +6,7 @@ namespace App\House\Domain\Entity;
 
 use App\Core\Domain\Entity\AbstractEntity;
 use App\Core\Domain\ValueObject\IdInterface;
+use App\House\Domain\Exception\ChoreNotFoundException;
 use App\House\Domain\ValueObject\ChoreCollection;
 use DateTimeImmutable;
 
@@ -96,6 +97,9 @@ final class Room extends AbstractEntity
         $this->removed = true;
     }
 
+    /**
+     * @throws ChoreNotFoundException
+     */
     public function removeChore(IdInterface $id): void
     {
         $this->choreCollection->get($id)->remove();

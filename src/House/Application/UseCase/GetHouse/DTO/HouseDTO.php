@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\GetHouse\DTO;
 
+use App\House\Application\DTO\UserDTOCollection;
+
 final class HouseDTO
 {
     private string $id;

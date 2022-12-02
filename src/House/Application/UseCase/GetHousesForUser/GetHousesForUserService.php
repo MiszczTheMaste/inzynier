@@ -7,6 +7,7 @@ namespace App\House\Application\UseCase\GetHousesForUser;
 use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use App\Core\Domain\Exception\DatabaseException;
 use App\House\Application\Query\GetHousesForUserQueryInterface;
 use App\House\Application\Query\GetUsernameByIdQueryInterface;
 
@@ -34,6 +35,9 @@ final class GetHousesForUserService implements GetHousesForUserServiceInterface
     }
 
 
+    /**
+     * @throws DatabaseException
+     */
     public function handle(GetHousesForUserRequest $request): UseCasePayload
     {
         $userId = $this->getCurrentlyLoggedInUserIdQuery->execute();

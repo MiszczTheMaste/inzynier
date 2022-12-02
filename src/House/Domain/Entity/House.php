@@ -9,11 +9,14 @@ use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Event\ChoreCreatedEvent;
 use App\House\Domain\Event\ChoreRemovedEvent;
+use App\House\Domain\Event\FulfilmentAddedEvent;
+use App\House\Domain\Event\FulfilmentFinishedEvent;
 use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
 use App\House\Domain\Event\RoomRemovedEvent;
 use App\House\Domain\Event\UserAddedToHouseEvent;
+use App\House\Domain\Exception\ChoreNotFoundException;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\ValueObject\ChoreCollection;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
@@ -70,6 +73,7 @@ final class House extends AbstractAggregate
      * @param UserIdCollection $users
      * @param DateTimeImmutable|null $creationDate
      * @param bool $removed
+     * @throws InvalidObjectTypeInCollectionException
      */
     public function __construct(
         IdInterface $id,
@@ -193,6 +197,32 @@ final class House extends AbstractAggregate
         );
     }
 
+    public function fulfilChore(IdInterface $roomId, IdInterface $choreId, IdInterface $fulfilmentId, IdInterface $nextFulfilmentId): void
+    {
+        $chore = $this->getRoom($roomId)->getChoreCollection()->get($choreId);
+        $fulfilment = $chore->getChoreFulfilmentCollection()->get($fulfilmentId);
+        $fulfilment->finish();
+
+        $this->raise(new FulfilmentFinishedEvent($fulfilmentId));
+
+        $newFulfilment = new ChoreFulfilment(
+            $nextFulfilmentId,
+            new DateTimeImmutable($fulfilment->getDeadline()->format('Y-m-d') .' +'. $chore->getDaysInterval()->toInt() . 'days'),
+            false,
+            Rate::createWithZeroValue()
+        );
+
+        $chore->getChoreFulfilmentCollection()->add($newFulfilment);
+
+        $this->raise(
+            new FulfilmentAddedEvent(
+                $newFulfilment->getId(),
+                $chore->getId(),
+                $newFulfilment->getDeadline(),
+            )
+        );
+    }
+
     /**
      * @return void
      */
@@ -221,6 +251,7 @@ final class House extends AbstractAggregate
      * @param IdInterface $choreId
      * @return void
      * @throws RoomNotFoundException
+     * @throws ChoreNotFoundException
      */
     public function removeChore(IdInterface $roomId, IdInterface $choreId): void
     {
