@@ -11,10 +11,16 @@ use App\Auth\Domain\ValueObject\Username;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
 
+/**
+ *
+ */
 final class RegisterService implements RegisterServiceInterface
 {
     private UserRepositoryInterface $repository;
 
+    /**
+     * @param UserRepositoryInterface $repository
+     */
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;

@@ -15,15 +15,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class LoginAction
 {
     private LoginServiceInterface $service;
 
+    /**
+     * @param LoginServiceInterface $service
+     */
     public function __construct(LoginServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         try {

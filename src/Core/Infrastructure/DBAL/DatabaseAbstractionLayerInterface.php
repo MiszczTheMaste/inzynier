@@ -8,6 +8,9 @@ use App\Core\Domain\Exception\DatabaseConnectionException;
 use App\Core\Domain\ValueObject\DbRow;
 use App\Core\Domain\ValueObject\DbRowCollection;
 
+/**
+ *
+ */
 interface DatabaseAbstractionLayerInterface
 {
     /**

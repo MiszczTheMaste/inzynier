@@ -10,7 +10,13 @@ use App\Core\Infrastructure\HttpClient\SymfonyInternalClient;
 use App\Front\Application\View\TwigView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
+/**
+ *
+ */
 final class ViewAddChoreService implements ViewAddChoreServiceInterface
 {
     private TwigView $view;
@@ -27,6 +33,11 @@ final class ViewAddChoreService implements ViewAddChoreServiceInterface
         $this->symfonyInternalClient = $symfonyInternalClient;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function handle(ViewAddChoreRequest $request): UseCasePayload
     {
         $room = $this->symfonyInternalClient->sendRequest(

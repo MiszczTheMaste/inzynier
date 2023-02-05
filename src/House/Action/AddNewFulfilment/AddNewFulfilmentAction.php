@@ -6,23 +6,31 @@ namespace App\House\Action\AddNewFulfilment;
 
 use App\House\Application\UseCase\AddNewFulfilment\AddNewFulfilmentRequest;
 use App\House\Application\UseCase\AddNewFulfilment\AddNewFulfilmentServiceInterface;
-use App\House\Application\UseCase\AddUserToHouse\AddUserToHouseRequest;
-use App\House\Application\UseCase\AddUserToHouse\AddUserToHouseServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class AddNewFulfilmentAction
 {
     private AddNewFulfilmentServiceInterface $service;
 
+    /**
+     * @param AddNewFulfilmentServiceInterface $service
+     */
     public function __construct(AddNewFulfilmentServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         try {

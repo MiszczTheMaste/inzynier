@@ -8,50 +8,59 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <style>
-            *{
+            * {
                 box-sizing: border-box;
             }
-            html,body{
+
+            html, body {
                 margin: 0;
                 background-color: #0f0f0f;
                 color: #ffffff;
                 font-family: Arial, sans-serif;
             }
-            main{
+
+            main {
                 width: 100vw;
                 height: 100vh;
                 top: 0;
                 position: absolute;
             }
-            section{
+
+            section {
                 width: 100%;
             }
-            h1{
+
+            h1 {
                 font-family: Impact, sans-serif;
                 text-align: center;
                 font-size: 80px;
                 margin-top: 75px;
             }
-            h2{
+
+            h2 {
                 text-align: center;
                 font-size: 48px;
             }
-            h3{
+
+            h3 {
                 text-align: center;
                 font-size: 32px;
             }
-            a{
+
+            a {
                 color: #ffffff;
                 text-decoration: none;
                 text-align: center;
                 font-size: 48px;
             }
-            .history-wrap{
+
+            .history-wrap {
                 display: flex;
                 flex-wrap: wrap;
                 align-content: start;
                 justify-content: flex-start;
             }
+
             label {
                 color: #fff;
                 display: block;
@@ -59,6 +68,7 @@
                 text-align: center;
                 font-size: 48px;
             }
+
             section span {
                 width: 100%;
                 border: none;
@@ -66,7 +76,8 @@
                 text-align: center;
                 font-size: 48px;
             }
-            .end-button{
+
+            .end-button {
                 background-color: #273927;
                 width: 100%;
                 margin-top: 50px;
@@ -75,44 +86,65 @@
                 color: #fff;
                 border: none;
             }
+
             @keyframes rainbow {
-                0% {color: #ff9999}
-                10% {color: #99ff99}
-                20% {color: #9999ff}
-                30% {color: #ff9999}
-                40% {color: #fff}
-                100% {color: #fff}
+                0% {
+                    color: #ff9999
+                }
+                10% {
+                    color: #99ff99
+                }
+                20% {
+                    color: #9999ff
+                }
+                30% {
+                    color: #ff9999
+                }
+                40% {
+                    color: #fff
+                }
+                100% {
+                    color: #fff
+                }
             }
-            h3 > div{
+
+            h3 > div {
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            h3 > div > span{
+
+            h3 > div > span {
                 display: block;
                 width: 100%;
             }
-            h3 > div > span:nth-child(1){
+
+            h3 > div > span:nth-child(1) {
                 animation: rainbow 2s 0.1s infinite linear;
             }
-            h3 > div > span:nth-child(2){
+
+            h3 > div > span:nth-child(2) {
                 animation: rainbow 2s 0.4s infinite linear;
             }
-            h3 > div > span:nth-child(3){
+
+            h3 > div > span:nth-child(3) {
                 animation: rainbow 2s 0.6s infinite linear;
             }
-            .history-title{
+
+            .history-title {
                 font-size: 48px;
             }
-            .back-button{
+
+            .back-button {
                 position: absolute;
                 top: 0;
                 left: 50px;
                 font-size: 80px;
                 margin-top: 75px;
             }
-            .flash-notice{
+
+            .flash-notice {
                 position: absolute;
                 color: #ff9999;
                 font-size: 72px;
@@ -122,6 +154,19 @@
                 padding-bottom: 75px;
                 background-color: #0a0a0a99;
             }
+
+            section input, select {
+                width: 50%;
+                border: none;
+                height: 80px;
+                font-size: 72px;
+                float: left;
+                text-align: center;
+            }
+
+            form {
+                width: 100%;
+            }
         </style>
     {% endblock %}
 
@@ -129,10 +174,10 @@
         {{ encore_entry_script_tags('app') }}
 
         <script>
-            function showHistory(buttonElem){
+            function showHistory(buttonElem) {
                 let elem = document.querySelector('#history');
 
-                if(elem.style.display === 'flex'){
+                if (elem.style.display === 'flex') {
                     elem.style.display = 'none';
                     buttonElem.querySelector('div').style.display = 'flex';
                 } else {
@@ -142,7 +187,7 @@
             }
         </script>
         <script>
-            function hide(elem){
+            function hide(elem) {
                 elem.style.display = 'none';
             }
         </script>
@@ -156,7 +201,9 @@
                 {{ message }}
             </div>
         {% endfor %}
-        <a href="/houses/{{ house.id }}/rooms/{{ room.id }}"><div class="back-button"><</div></a>
+        <a href="/houses/{{ house.id }}/rooms/{{ room.id }}">
+            <div class="back-button"><</div>
+        </a>
         <a href="/"><h1>ElemeleApp</h1></a>
         <h2>{{ room.name }}</h2>
         <h3>{{ chore.name }}</h3>
@@ -171,7 +218,9 @@
                 <form method="post"
                       action="/api/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}/fulfilments/{{ chore.current_fulfilment.id }}.form">
                     <input name="finished" value="1" type="number" style="display: none">
-                    <input type="text" name="redirect_address" value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}" style="display: none">
+                    <input type="text" name="redirect_address"
+                           value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}"
+                           style="display: none">
                     <input class='end-button' type="submit" value="Potwierdź wykonanie">
                 </form>
             {% endif %}
@@ -183,10 +232,28 @@
                 <span>▼</span>
             </div>
         </h3>
-        <section class="history-wrap" id="history"  style="display: none">
+        <section class="history-wrap" id="history" style="display: none">
             {% for fulfilment in chore.fulfilments %}
                 {% if fulfilment %}
-                    <span>{{ fulfilment.deadline }} {{ fulfilment.rate }}</span>
+                <span>{{ fulfilment.deadline }} {{ fulfilment.rate }}</span>
+                {% if not chore.responsible_user_id == user.id %}
+                    {% if fulfilment.rate == 0 %}
+                        <form method="post"
+                              action="/api/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}/fulfilments/{{ fulfilment.id }}/rate.form">
+                            <select name="rate">
+                                <option value=1>1</option>
+                                <option value=2>2</option>
+                                <option value=3>3</option>
+                                <option value=4>4</option>
+                                <option value=5>5</option>
+                            </select>
+                            <input type="submit" value="Oceń" class="submit-button">
+                            <input type="text" name="redirect_address"
+                                   value="/houses/{{ house.id }}/rooms/{{ room.id }}/chores/{{ chore.id }}"
+                                   style="display: none">
+                        </form>
+                    {% endif %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </section>

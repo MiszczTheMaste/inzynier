@@ -14,6 +14,9 @@ use App\House\Domain\Exception\ChoreNotFoundException;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
+/**
+ *
+ */
 final class RemoveChoreService implements RemoveChoreServiceInterface
 {
     /**

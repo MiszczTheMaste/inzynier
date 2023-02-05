@@ -10,6 +10,9 @@ use App\Core\Application\UseCase\UseCasePayload;
 use App\Core\Domain\Exception\DatabaseException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 
+/**
+ *
+ */
 interface LoginServiceInterface
 {
     /**

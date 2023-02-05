@@ -9,6 +9,9 @@ use App\Core\Domain\Event\EventInterface;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 
+/**
+ *
+ */
 abstract class AbstractAggregate extends AbstractEntity
 {
     private EventCollection $events;
@@ -22,11 +25,18 @@ abstract class AbstractAggregate extends AbstractEntity
         $this->events = new EventCollection([]);
     }
 
+    /**
+     * @return EventCollection
+     */
     public function getEvents(): EventCollection
     {
         return $this->events;
     }
 
+    /**
+     * @param EventInterface $event
+     * @return void
+     */
     public function raise(EventInterface $event): void
     {
         $this->events->addEvent($event);

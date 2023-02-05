@@ -9,6 +9,9 @@ use App\Front\Application\UseCase\ViewChore\ViewChoreServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class ViewChoreAction
 {
     private ViewChoreServiceInterface $service;
@@ -21,6 +24,10 @@ final class ViewChoreAction
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         $response = $this->service->handle(

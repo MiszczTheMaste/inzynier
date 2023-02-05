@@ -9,6 +9,9 @@ use App\Core\Application\UseCase\UseCasePayload;
 use App\House\Application\Query\GetRoomNameQueryInterface;
 use App\House\Application\UseCase\GetRoom\Query\GetChoresQueryInterface;
 
+/**
+ *
+ */
 final class GetRoomService implements GetRoomServiceInterface
 {
     private GetChoresQueryInterface $getChoresQuery;
@@ -25,6 +28,10 @@ final class GetRoomService implements GetRoomServiceInterface
         $this->getRoomNameQuery = $getRoomNameQuery;
     }
 
+    /**
+     * @param GerRoomRequest $request
+     * @return UseCasePayload
+     */
     public function handle(GerRoomRequest $request): UseCasePayload
     {
         return new UseCasePayload(

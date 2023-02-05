@@ -12,6 +12,9 @@ use App\House\Application\DTO\UserDTO;
 use App\House\Application\DTO\UserDTOCollection;
 use App\House\Application\UseCase\GetUsersInHouse\Query\GetUsersInHouseQueryInterface;
 
+/**
+ *
+ */
 final class GetUsersInHouseSqlQuery extends AbstractSqlQuery implements GetUsersInHouseQueryInterface
 {
     /**

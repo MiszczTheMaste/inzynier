@@ -6,6 +6,9 @@ namespace App\Auth\Domain\Exception;
 
 use App\Core\Domain\Exception\AbstractException;
 
+/**
+ *
+ */
 final class InvalidPasswordException extends AbstractException
 {
 }

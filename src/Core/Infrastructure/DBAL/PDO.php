@@ -11,11 +11,21 @@ use App\Core\Domain\ValueObject\DbRow;
 use App\Core\Domain\ValueObject\DbRowCollection;
 use PDO as BasePDO;
 
+/**
+ *
+ */
 final class PDO implements DatabaseAbstractionLayerInterface
 {
     /** @var BasePDO */
     private BasePDO $pdo;
 
+    /**
+     * @param string $host
+     * @param int $port
+     * @param string $name
+     * @param string $user
+     * @param string $password
+     */
     public function __construct(
         string $host,
         int $port,
@@ -99,6 +109,9 @@ final class PDO implements DatabaseAbstractionLayerInterface
         }
     }
 
+    /**
+     * @return void
+     */
     public function beginTransaction(): void
     {
         if ($this->pdo->inTransaction()) {
@@ -108,11 +121,17 @@ final class PDO implements DatabaseAbstractionLayerInterface
         $this->pdo->beginTransaction();
     }
 
+    /**
+     * @return void
+     */
     public function commitTransaction(): void
     {
         $this->pdo->commit();
     }
 
+    /**
+     * @return void
+     */
     public function rollbackTransaction(): void
     {
         $this->pdo->rollBack();

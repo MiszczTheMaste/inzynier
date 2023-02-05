@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Core\Domain\Event;
 
+/**
+ *
+ */
 final class EventHandler
 {
     private string $eventNamespace;

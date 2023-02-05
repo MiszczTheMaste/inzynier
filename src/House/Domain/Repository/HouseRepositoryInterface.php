@@ -11,6 +11,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Entity\House;
 use App\House\Domain\Exception\RoomNotFoundException;
 
+/**
+ *
+ */
 interface HouseRepositoryInterface extends RepositoryInterface
 {
     /**

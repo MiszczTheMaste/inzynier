@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace App\House\Domain\ValueObject;
 
 use App\House\Domain\Exception\InvalidDaysIntervalException;
+use DateInterval;
+use Exception;
 
+/**
+ *
+ */
 final class DaysInterval
 {
     private int $value;
@@ -29,8 +34,19 @@ final class DaysInterval
         }
     }
 
+    /**
+     * @return int
+     */
     public function toInt(): int
     {
         return $this->value;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function toDateInterval(): DateInterval
+    {
+        return DateInterval::createFromDateString($this->value . ' day');
     }
 }

@@ -15,6 +15,9 @@ use App\House\Application\UseCase\GetHouse\DTO\RoomDTO;
 use App\House\Application\UseCase\GetHouse\DTO\RoomDTOCollection;
 use App\House\Application\UseCase\GetHouse\Query\GetHouseQueryInterface;
 
+/**
+ *
+ */
 final class GetHouseSqlQuery extends AbstractSqlQuery implements GetHouseQueryInterface
 {
     /**

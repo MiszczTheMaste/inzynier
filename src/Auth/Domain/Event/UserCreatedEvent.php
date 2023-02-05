@@ -7,6 +7,9 @@ namespace App\Auth\Domain\Event;
 use App\Core\Domain\Event\EventInterface;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class UserCreatedEvent implements EventInterface
 {
     private string $id;

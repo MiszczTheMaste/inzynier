@@ -12,13 +12,19 @@ use App\House\Application\UseCase\GetChore\DTO\ChoreDTO;
 use App\House\Application\UseCase\GetChore\DTO\ChoreFulfilmentDTO;
 use App\House\Application\UseCase\GetChore\DTO\ChoreFulfilmentDTOCollection;
 use App\House\Application\UseCase\GetChore\Query\GetChoreQueryInterface;
+use DateTimeImmutable;
+use Exception;
 
+/**
+ *
+ */
 final class GetChoreSqlQuery extends AbstractSqlQuery implements GetChoreQueryInterface
 {
     /**
      * @throws DatabaseException
      * @throws ItemNotFoundInCollectionException
      * @throws InvalidObjectTypeInCollectionException
+     * @throws Exception
      */
     public function execute(string $choreId): ChoreDTO
     {
@@ -41,9 +47,10 @@ final class GetChoreSqlQuery extends AbstractSqlQuery implements GetChoreQueryIn
 
         $fulfilmentCollection = [];
         foreach ($fulfilments->getCollection() as $row) {
+            $deadline = new DateTimeImmutable((string)$row->getFieldValue('deadline'));
             $fulfilmentCollection[] = new ChoreFulfilmentDTO(
                 (string) $row->getFieldValue('id'),
-                (string)$row->getFieldValue('deadline'),
+                $deadline->format('d-m-Y'),
                 (bool)$row->getFieldValue('finished'),
                 (int)$row->getFieldValue('rate'),
             );

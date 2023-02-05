@@ -9,6 +9,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\ValueObject\DaysInterval;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class ChoreCreatedEvent implements EventInterface
 {
     private IdInterface $id;

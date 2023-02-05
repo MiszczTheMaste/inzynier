@@ -7,6 +7,9 @@ namespace App\House\Application\UseCase\GetChore\DTO;
 use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Domain\ValueObject\AbstractCollection;
 
+/**
+ *
+ */
 final class ChoreFulfilmentDTOCollection extends AbstractCollection
 {
     /**
@@ -31,6 +34,9 @@ final class ChoreFulfilmentDTOCollection extends AbstractCollection
         throw new ItemNotFoundInCollectionException();
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return ChoreFulfilmentDTO::class;

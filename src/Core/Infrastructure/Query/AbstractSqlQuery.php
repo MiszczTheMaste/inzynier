@@ -10,6 +10,9 @@ use App\Core\Domain\ValueObject\DbRowCollection;
 use App\Core\Infrastructure\DBAL\DatabaseAbstractionLayerInterface;
 use Exception;
 
+/**
+ *
+ */
 abstract class AbstractSqlQuery
 {
     private DatabaseAbstractionLayerInterface $dbal;

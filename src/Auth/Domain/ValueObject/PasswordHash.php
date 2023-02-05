@@ -6,10 +6,16 @@ namespace App\Auth\Domain\ValueObject;
 
 use App\Auth\Domain\Exception\PasswordHashingException;
 
+/**
+ *
+ */
 final class PasswordHash
 {
     private string $value;
 
+    /**
+     * @param string $value
+     */
     public function __construct(string $value)
     {
         $this->value = $value;
@@ -29,11 +35,18 @@ final class PasswordHash
         return new self($hash);
     }
 
+    /**
+     * @return string
+     */
     public function toString(): string
     {
         return $this->value;
     }
 
+    /**
+     * @param string $password
+     * @return bool
+     */
     public function verify(string $password): bool
     {
         return password_verify($password, $this->value);

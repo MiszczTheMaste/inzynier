@@ -6,7 +6,14 @@ namespace App\House\Application\UseCase\GetHouse;
 
 use App\Core\Application\UseCase\UseCasePayload;
 
+/**
+ *
+ */
 interface GetHouseServiceInterface
 {
+    /**
+     * @param GetHouseRequest $request
+     * @return UseCasePayload
+     */
     public function handle(GetHouseRequest $request): UseCasePayload;
 }

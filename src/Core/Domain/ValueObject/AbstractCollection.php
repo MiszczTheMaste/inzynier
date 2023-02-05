@@ -8,6 +8,9 @@ use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use ArrayIterator;
 use Traversable;
 
+/**
+ *
+ */
 abstract class AbstractCollection implements CollectionInterface
 {
     /**
@@ -24,28 +27,47 @@ abstract class AbstractCollection implements CollectionInterface
         $this->collection = $collection;
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function collectionHasKey(string $key): bool
     {
         return array_key_exists($key, $this->getCollection());
     }
 
+    /**
+     * @return bool
+     */
     public function isEmpty(): bool
     {
         return false === (bool) count($this->collection);
     }
 
+    /**
+     * @return int
+     */
     public function count(): int
     {
         return count($this->collection);
     }
 
+    /**
+     * @return Traversable
+     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->collection);
     }
 
+    /**
+     * @return array
+     */
     abstract public function getCollection(): array;
 
+    /**
+     * @return string
+     */
     abstract protected function getCollectionClass(): string;
 
     /**

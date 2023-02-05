@@ -7,6 +7,9 @@ namespace App\Core\Domain\ValueObject;
 use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 
+/**
+ *
+ */
 final class DbRow extends AbstractCollection
 {
     /**
@@ -29,6 +32,9 @@ final class DbRow extends AbstractCollection
         return $this->collection[$name]->getValue();
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return DbField::class;

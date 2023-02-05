@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\GetHouse\DTO;
 
+/**
+ *
+ */
 final class RoomDTO
 {
     private string $id;

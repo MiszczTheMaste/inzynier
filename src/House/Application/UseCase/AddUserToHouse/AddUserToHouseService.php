@@ -14,6 +14,9 @@ use App\House\Application\Query\GetUserIdQueryInterface;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
+/**
+ *
+ */
 final class AddUserToHouseService implements AddUserToHouseServiceInterface
 {
     /**

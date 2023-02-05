@@ -6,6 +6,9 @@ namespace App\House\Domain\Exception;
 
 use App\Core\Domain\Exception\AbstractException;
 
+/**
+ *
+ */
 final class InvalidRateException extends AbstractException
 {
 }

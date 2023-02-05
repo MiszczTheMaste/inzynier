@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\GetHousesForUser\DTO;
 
 use App\Core\Domain\ValueObject\AbstractCollection;
 
+/**
+ *
+ */
 final class HouseDTOCollection extends AbstractCollection
 {
     /**
@@ -16,6 +19,9 @@ final class HouseDTOCollection extends AbstractCollection
         return $this->collection;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
 
@@ -31,6 +37,9 @@ final class HouseDTOCollection extends AbstractCollection
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return HouseDTO::class;

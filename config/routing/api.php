@@ -7,6 +7,7 @@ use App\House\Action\AddUserToHouse\AddUserToHouseAction;
 use App\House\Action\CreateChore\CreateChoreAction;
 use App\House\Action\CreateHouse\CreateHouseAction;
 use App\House\Action\CreateRoom\CreateRoomAction;
+use App\House\Action\EditFulfilment\EditFulfilmentAction;
 use App\House\Action\GetChore\GetChoreAction;
 use App\House\Action\GetRoom\GetRoomAction;
 use App\House\Action\GetHouse\GetHouseAction;
@@ -61,5 +62,9 @@ return static function (RoutingConfigurator $routes) {
 
     $routes->add('post.api.house.room.chore.fulfilment', '/api/houses/{house_id}/rooms/{room_id}/chores/{chore_id}/fulfilments/{fulfilment_id}.{format}')
         ->controller(AddNewFulfilmentAction::class)
+        ->methods(['POST']);
+
+    $routes->add('post.api.house.room.chore.fulfilment.rate', '/api/houses/{house_id}/rooms/{room_id}/chores/{chore_id}/fulfilments/{fulfilment_id}/rate.{format}')
+        ->controller(EditFulfilmentAction::class)
         ->methods(['POST']);
 };

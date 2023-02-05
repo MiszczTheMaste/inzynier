@@ -23,6 +23,7 @@ use App\House\Domain\Event\ChoreCreatedEvent;
 use App\House\Domain\Event\ChoreRemovedEvent;
 use App\House\Domain\Event\FulfilmentAddedEvent;
 use App\House\Domain\Event\FulfilmentFinishedEvent;
+use App\House\Domain\Event\FulfilmentRateChangedEvent;
 use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
@@ -60,6 +61,7 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         $handlers->addHandler('handleUserAddedToHouseEvent', UserAddedToHouseEvent::class);
         $handlers->addHandler('handleFulfilmentAddedEvent', FulfilmentAddedEvent::class);
         $handlers->addHandler('handleFulfilmentFinishedEvent', FulfilmentFinishedEvent::class);
+        $handlers->addHandler('handleFulfilmentRateChangedEvent', FulfilmentRateChangedEvent::class);
 
         return $handlers;
     }
@@ -249,6 +251,23 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
         );
     }
 
+
+    /**
+     * @param FulfilmentRateChangedEvent $event
+     * @return void
+     * @throws DatabaseException
+     */
+    protected function handleFulfilmentRateChangedEvent(FulfilmentRateChangedEvent $event): void
+    {
+        $this->execute(
+            'UPDATE chores_fulfilments SET rate = :rate WHERE id = :id',
+            [
+                ':id' => $event->getId()->toString(),
+                ':rate' => $event->getRate()->toInt()
+            ]
+        );
+    }
+
     /**
      * @param IdInterface $houseId
      * @param DbRow $dbRow
@@ -364,6 +383,7 @@ final class HouseEventRepository extends AbstractEventSQLRepository implements H
      * @throws InvalidObjectTypeInCollectionException
      * @throws InvalidDaysIntervalException
      * @throws DatabaseException
+     * @throws Exception
      */
     private function createChoreCollection(DbRowCollection $result): ChoreCollection
     {

@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\GetRoom\DTO;
 
 use App\Core\Domain\ValueObject\AbstractCollection;
 
+/**
+ *
+ */
 final class ChoreDTOCollection extends AbstractCollection
 {
     /**
@@ -16,6 +19,9 @@ final class ChoreDTOCollection extends AbstractCollection
         return $this->collection;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return array_map(
@@ -32,6 +38,9 @@ final class ChoreDTOCollection extends AbstractCollection
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return ChoreDTO::class;

@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 
+/**
+ *
+ */
 final class SymfonyInternalClient
 {
     /** @var RequestMatcherInterface */
@@ -29,6 +32,10 @@ final class SymfonyInternalClient
         $this->controllerResolver = $controllerResolver;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function sendRequest(Request $request): Response
     {
         $controller = $this->getControllerForRequest($request);

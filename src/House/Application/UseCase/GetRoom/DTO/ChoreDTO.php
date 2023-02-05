@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\GetRoom\DTO;
 
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class ChoreDTO
 {
     private string $id;

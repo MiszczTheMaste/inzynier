@@ -20,6 +20,9 @@ use App\Core\Infrastructure\DBAL\DatabaseAbstractionLayerInterface;
 use Exception;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
+/**
+ *
+ */
 abstract class AbstractEventSQLRepository
 {
     private DatabaseAbstractionLayerInterface $dbal;
@@ -112,6 +115,9 @@ abstract class AbstractEventSQLRepository
         }
     }
 
+    /**
+     * @return EventDispatcherInterface
+     */
     protected function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->eventDispatcher;

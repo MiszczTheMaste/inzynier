@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Front\Application\UseCase\ViewRoom;
 
+/**
+ *
+ */
 final class ViewRoomRequest
 {
     private string $houseId;

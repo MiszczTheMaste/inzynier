@@ -8,9 +8,13 @@ use App\Auth\Domain\Event\UserCreatedEvent;
 use App\Auth\Domain\ValueObject\PasswordHash;
 use App\Auth\Domain\ValueObject\Username;
 use App\Core\Domain\Entity\AbstractAggregate;
+use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class User extends AbstractAggregate
 {
     private Username $username;
@@ -21,6 +25,14 @@ final class User extends AbstractAggregate
 
     private DateTimeImmutable $creationDate;
 
+    /**
+     * @param IdInterface $id
+     * @param Username $username
+     * @param PasswordHash $password
+     * @param bool $removed
+     * @param DateTimeImmutable|null $creationDate
+     * @throws InvalidObjectTypeInCollectionException
+     */
     public function __construct(
         IdInterface $id,
         Username $username,

@@ -6,17 +6,20 @@ namespace App\House\Domain\Entity;
 
 use App\Core\Domain\Entity\AbstractAggregate;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
+use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Event\ChoreCreatedEvent;
 use App\House\Domain\Event\ChoreRemovedEvent;
 use App\House\Domain\Event\FulfilmentAddedEvent;
 use App\House\Domain\Event\FulfilmentFinishedEvent;
+use App\House\Domain\Event\FulfilmentRateChangedEvent;
 use App\House\Domain\Event\HouseCreatedEvent;
 use App\House\Domain\Event\HouseRemovedEvent;
 use App\House\Domain\Event\RoomCreatedEvent;
 use App\House\Domain\Event\RoomRemovedEvent;
 use App\House\Domain\Event\UserAddedToHouseEvent;
 use App\House\Domain\Exception\ChoreNotFoundException;
+use App\House\Domain\Exception\FulfilmentNotFoundException;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\ValueObject\ChoreCollection;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
@@ -25,6 +28,7 @@ use App\House\Domain\ValueObject\Rate;
 use App\House\Domain\ValueObject\RoomCollection;
 use App\House\Domain\ValueObject\UserIdCollection;
 use DateTimeImmutable;
+use Exception;
 
 /**
  *
@@ -185,6 +189,10 @@ final class House extends AbstractAggregate
         );
     }
 
+    /**
+     * @param IdInterface $userId
+     * @return void
+     */
     public function addUser(IdInterface $userId): void
     {
         $this->users->add($userId);
@@ -197,6 +205,12 @@ final class House extends AbstractAggregate
         );
     }
 
+    /**
+     * @throws ChoreNotFoundException
+     * @throws RoomNotFoundException
+     * @throws ItemNotFoundInCollectionException
+     * @throws Exception
+     */
     public function fulfilChore(IdInterface $roomId, IdInterface $choreId, IdInterface $fulfilmentId, IdInterface $nextFulfilmentId): void
     {
         $chore = $this->getRoom($roomId)->getChoreCollection()->get($choreId);
@@ -207,7 +221,7 @@ final class House extends AbstractAggregate
 
         $newFulfilment = new ChoreFulfilment(
             $nextFulfilmentId,
-            new DateTimeImmutable($fulfilment->getDeadline()->format('Y-m-d') . ' +' . $chore->getDaysInterval()->toInt() . 'days'),
+            $fulfilment->getDeadline()->add($chore->getDaysInterval()->toDateInterval()),
             false,
             Rate::createWithZeroValue()
         );
@@ -325,5 +339,27 @@ final class House extends AbstractAggregate
     public function isRemoved(): bool
     {
         return $this->removed;
+    }
+
+    /**
+     * @param IdInterface $roomId
+     * @param IdInterface $choreId
+     * @param IdInterface $fulfilmentId
+     * @param Rate $rate
+     * @return void
+     * @throws ChoreNotFoundException
+     * @throws RoomNotFoundException
+     * @throws FulfilmentNotFoundException
+     */
+    public function changeFulfillmentRateTo(idInterface $roomId, IdInterface $choreId, IdInterface $fulfilmentId, Rate $rate): void
+    {
+        $fulfilment = $this->getRoom($roomId)->getChore($choreId)->getFulfilment($fulfilmentId);
+
+        if (false === $fulfilment->getRate()->isChangeable()) {
+            return;
+        }
+
+        $this->raise(new FulfilmentRateChangedEvent($fulfilmentId, $rate));
+        $fulfilment->changeRateTo($rate);
     }
 }

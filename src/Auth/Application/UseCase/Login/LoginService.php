@@ -12,6 +12,9 @@ use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ *
+ */
 final class LoginService implements LoginServiceInterface
 {
     private UserRepositoryInterface $repository;

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Front\Application\UseCase\ViewPage;
 
+/**
+ *
+ */
 final class ViewPageRequest
 {
     private string $page;

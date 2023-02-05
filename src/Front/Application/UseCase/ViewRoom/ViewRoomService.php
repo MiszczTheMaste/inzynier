@@ -10,7 +10,13 @@ use App\Core\Infrastructure\HttpClient\SymfonyInternalClient;
 use App\Front\Application\View\TwigView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
+/**
+ *
+ */
 final class ViewRoomService implements ViewRoomServiceInterface
 {
     private TwigView $view;
@@ -27,6 +33,11 @@ final class ViewRoomService implements ViewRoomServiceInterface
         $this->symfonyInternalClient = $symfonyInternalClient;
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     public function handle(ViewRoomRequest $request): UseCasePayload
     {
         $room = $this->symfonyInternalClient->sendRequest(

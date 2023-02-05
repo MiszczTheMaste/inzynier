@@ -6,6 +6,9 @@ namespace App\Auth\Application\Query;
 
 use App\Core\Domain\Exception\DatabaseException;
 
+/**
+ *
+ */
 interface GetCurrentlyLoggedInUserIdQueryInterface
 {
     /**

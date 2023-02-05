@@ -9,6 +9,9 @@ use App\Front\Application\UseCase\ViewHouse\ViewHouseServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class ViewHouseAction
 {
     private ViewHouseServiceInterface $service;
@@ -21,6 +24,10 @@ final class ViewHouseAction
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         $response = $this->service->handle(new ViewHouseRequest($request->get('house_id')));

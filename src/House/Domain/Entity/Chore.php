@@ -6,24 +6,49 @@ namespace App\House\Domain\Entity;
 
 use App\Core\Domain\Entity\AbstractEntity;
 use App\Core\Domain\ValueObject\IdInterface;
+use App\House\Domain\Exception\FulfilmentNotFoundException;
 use App\House\Domain\ValueObject\ChoreFulfilmentCollection;
 use App\House\Domain\ValueObject\DaysInterval;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class Chore extends AbstractEntity
 {
+    /**
+     * @var DaysInterval
+     */
     private DaysInterval $daysInterval;
 
+    /**
+     * @var IdInterface
+     */
     private IdInterface $iconId;
 
+    /**
+     * @var IdInterface
+     */
     private IdInterface $userId;
 
+    /**
+     * @var string
+     */
     private string $name;
 
+    /**
+     * @var ChoreFulfilmentCollection
+     */
     private ChoreFulfilmentCollection $choreFulfilmentCollection;
 
+    /**
+     * @var DateTimeImmutable
+     */
     private DateTimeImmutable $creationDate;
 
+    /**
+     * @var bool
+     */
     private bool $removed;
 
     /**
@@ -129,6 +154,22 @@ final class Chore extends AbstractEntity
     }
 
     /**
+     * @param IdInterface $id
+     * @return ChoreFulfilment
+     * @throws FulfilmentNotFoundException
+     */
+    public function getFulfilment(IdInterface $id): ChoreFulfilment
+    {
+        foreach ($this->choreFulfilmentCollection->getCollection() as $fulfilment) {
+            if ($fulfilment->getId()->equals($id)) {
+                return $fulfilment;
+            }
+        }
+
+        throw new FulfilmentNotFoundException();
+    }
+
+    /**
      * @param ChoreFulfilmentCollection $choreFulfilmentCollection
      */
     public function setChoreFulfilmentCollection(ChoreFulfilmentCollection $choreFulfilmentCollection): void
@@ -161,6 +202,9 @@ final class Chore extends AbstractEntity
     }
 
 
+    /**
+     * @return void
+     */
     public function remove(): void
     {
         $this->removed = true;

@@ -6,6 +6,9 @@ namespace App\House\Application\DTO;
 
 use App\Core\Domain\ValueObject\AbstractCollection;
 
+/**
+ *
+ */
 final class UserDTOCollection extends AbstractCollection
 {
     /**
@@ -16,6 +19,9 @@ final class UserDTOCollection extends AbstractCollection
         return $this->collection;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return array_map(
@@ -29,6 +35,9 @@ final class UserDTOCollection extends AbstractCollection
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return UserDTO::class;

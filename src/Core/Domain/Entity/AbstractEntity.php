@@ -6,6 +6,9 @@ namespace App\Core\Domain\Entity;
 
 use App\Core\Domain\ValueObject\IdInterface;
 
+/**
+ *
+ */
 abstract class AbstractEntity
 {
     protected IdInterface $id;

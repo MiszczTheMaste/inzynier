@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\AddNewFulfilment;
 
+/**
+ *
+ */
 final class AddNewFulfilmentRequest
 {
     private string $houseId;

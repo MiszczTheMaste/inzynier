@@ -12,15 +12,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class GetRoomAction
 {
     private GetRoomServiceInterface $service;
 
+    /**
+     * @param GetRoomServiceInterface $service
+     */
     public function __construct(GetRoomServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         try {

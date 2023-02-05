@@ -6,6 +6,9 @@ namespace App\House\Domain\ValueObject;
 
 use App\House\Domain\Exception\InvalidRateException;
 
+/**
+ *
+ */
 final class Rate
 {
     private const MIN_RATE = 1;
@@ -14,6 +17,9 @@ final class Rate
 
     private int $value;
 
+    /**
+     * @param int $value
+     */
     public function __construct(int $value)
     {
         $this->value = $value;
@@ -26,6 +32,10 @@ final class Rate
         self::validate($value);
         return new self($value);
     }
+
+    /**
+     * @return static
+     */
     public static function createWithZeroValue(): self
     {
         return new self(0);
@@ -41,8 +51,19 @@ final class Rate
         }
     }
 
+    /**
+     * @return int
+     */
     public function toInt(): int
     {
         return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isChangeable(): bool
+    {
+        return $this->value === 0;
     }
 }

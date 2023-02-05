@@ -9,6 +9,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Entity\Chore;
 use App\House\Domain\Exception\ChoreNotFoundException;
 
+/**
+ *
+ */
 final class ChoreCollection extends AbstractCollection
 {
     /**
@@ -33,11 +36,18 @@ final class ChoreCollection extends AbstractCollection
         throw new ChoreNotFoundException();
     }
 
+    /**
+     * @param Chore $chore
+     * @return void
+     */
     public function add(Chore $chore): void
     {
         $this->collection[] = $chore;
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return Chore::class;

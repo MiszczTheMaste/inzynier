@@ -7,6 +7,9 @@ namespace App\House\Domain\Event;
 use App\Core\Domain\Event\EventInterface;
 use App\Core\Domain\ValueObject\IdInterface;
 
+/**
+ *
+ */
 final class HouseRemovedEvent implements EventInterface
 {
     private IdInterface $id;

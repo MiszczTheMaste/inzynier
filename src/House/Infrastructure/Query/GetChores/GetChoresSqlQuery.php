@@ -12,13 +12,18 @@ use App\House\Application\UseCase\GetRoom\DTO\ChoreDTO;
 use App\House\Application\UseCase\GetRoom\DTO\ChoreDTOCollection;
 use App\House\Application\UseCase\GetRoom\Query\GetChoresQueryInterface;
 use DateTimeImmutable;
+use Exception;
 
+/**
+ *
+ */
 final class GetChoresSqlQuery extends AbstractSqlQuery implements GetChoresQueryInterface
 {
     /**
      * @throws DatabaseException
      * @throws ItemNotFoundInCollectionException
      * @throws InvalidObjectTypeInCollectionException
+     * @throws Exception
      */
     public function execute(string $roomId): ChoreDTOCollection
     {

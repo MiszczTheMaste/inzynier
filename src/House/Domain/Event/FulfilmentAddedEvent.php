@@ -6,21 +6,25 @@ namespace App\House\Domain\Event;
 
 use App\Core\Domain\Event\EventInterface;
 use App\Core\Domain\ValueObject\IdInterface;
+use DateTimeImmutable;
 
+/**
+ *
+ */
 final class FulfilmentAddedEvent implements EventInterface
 {
     private IdInterface $id;
 
     private IdInterface $choreId;
 
-    private \DateTimeImmutable $deadline;
+    private DateTimeImmutable $deadline;
 
     /**
      * @param IdInterface $id
      * @param IdInterface $choreId
-     * @param \DateTimeImmutable $deadline
+     * @param DateTimeImmutable $deadline
      */
-    public function __construct(IdInterface $id, IdInterface $choreId, \DateTimeImmutable $deadline)
+    public function __construct(IdInterface $id, IdInterface $choreId, DateTimeImmutable $deadline)
     {
         $this->id = $id;
         $this->choreId = $choreId;
@@ -44,9 +48,9 @@ final class FulfilmentAddedEvent implements EventInterface
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return DateTimeImmutable
      */
-    public function getDeadline(): \DateTimeImmutable
+    public function getDeadline(): DateTimeImmutable
     {
         return $this->deadline;
     }

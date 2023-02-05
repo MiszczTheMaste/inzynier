@@ -9,6 +9,9 @@ use App\Front\Application\UseCase\ViewHomepage\ViewHomepageServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class ViewHomepageAction
 {
     private ViewHomepageServiceInterface $service;
@@ -21,6 +24,10 @@ final class ViewHomepageAction
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         $response = $this->service->handle(new ViewHomepageRequest());

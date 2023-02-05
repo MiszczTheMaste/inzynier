@@ -8,10 +8,16 @@ use App\Core\Domain\Exception\InvalidIdException;
 use Ramsey\Uuid\Uuid as BaseUuid;
 use Ramsey\Uuid\UuidInterface;
 
+/**
+ *
+ */
 final class Uuid implements IdInterface
 {
     private UuidInterface $id;
 
+    /**
+     * @param UuidInterface $id
+     */
     private function __construct(UuidInterface $id)
     {
         $this->id = $id;
@@ -29,6 +35,10 @@ final class Uuid implements IdInterface
         return new self(BaseUuid::fromString($identifier));
     }
 
+    /**
+     * @param IdInterface $id
+     * @return bool
+     */
     public function equals(IdInterface $id): bool
     {
         return $this->id->toString() === $id->toString();

@@ -9,6 +9,9 @@ use App\Front\Application\UseCase\ViewRoom\ViewRoomServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class ViewRoomAction
 {
     private ViewRoomServiceInterface $service;
@@ -21,6 +24,10 @@ final class ViewRoomAction
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         $response = $this->service->handle(

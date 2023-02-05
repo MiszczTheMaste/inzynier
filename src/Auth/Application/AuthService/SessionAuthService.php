@@ -6,6 +6,9 @@ namespace App\Auth\Application\AuthService;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ *
+ */
 final class SessionAuthService implements AuthServiceInterface
 {
     public const SESSION_KEY = 'auth.user-id';
@@ -20,6 +23,9 @@ final class SessionAuthService implements AuthServiceInterface
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * @return bool
+     */
     public function isUserLoggedIn(): bool
     {
         return false === is_null($this->requestStack->getSession()->get(SessionAuthService::SESSION_KEY));

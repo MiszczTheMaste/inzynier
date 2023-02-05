@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Front\Application\UseCase\ViewAddChore;
 
+/**
+ *
+ */
 final class ViewAddChoreRequest
 {
     private string $houseId;

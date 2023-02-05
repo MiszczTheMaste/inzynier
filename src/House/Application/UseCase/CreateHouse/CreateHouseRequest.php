@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\CreateHouse;
 
 use App\Core\Application\UseCase\AbstractArrayRequest;
 
+/**
+ *
+ */
 final class CreateHouseRequest extends AbstractArrayRequest
 {
 }

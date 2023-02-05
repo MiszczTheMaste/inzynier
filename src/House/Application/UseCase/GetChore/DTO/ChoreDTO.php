@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\GetChore\DTO;
 
+/**
+ *
+ */
 final class ChoreDTO
 {
     private string $id;
@@ -96,6 +99,9 @@ final class ChoreDTO
         return $this->currentFulfilment;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [

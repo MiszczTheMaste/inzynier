@@ -9,6 +9,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\Entity\Room;
 use App\House\Domain\Exception\RoomNotFoundException;
 
+/**
+ *
+ */
 final class RoomCollection extends AbstractCollection
 {
     /**
@@ -33,11 +36,18 @@ final class RoomCollection extends AbstractCollection
         throw new RoomNotFoundException();
     }
 
+    /**
+     * @param Room $room
+     * @return void
+     */
     public function addRoom(Room $room): void
     {
         $this->collection[] = $room;
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return Room::class;

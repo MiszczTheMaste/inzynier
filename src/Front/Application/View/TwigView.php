@@ -10,6 +10,9 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+/**
+ *
+ */
 final class TwigView
 {
     /** @var Environment  */

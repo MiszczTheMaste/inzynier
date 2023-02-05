@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\AddUserToHouse;
 
 use App\Core\Application\UseCase\AbstractArrayRequest;
 
+/**
+ *
+ */
 final class AddUserToHouseRequest extends AbstractArrayRequest
 {
     private string $houseId;

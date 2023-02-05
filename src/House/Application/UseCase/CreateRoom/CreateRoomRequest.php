@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\CreateRoom;
 
 use App\Core\Application\UseCase\AbstractArrayRequest;
 
+/**
+ *
+ */
 final class CreateRoomRequest extends AbstractArrayRequest
 {
     private string $houseId;

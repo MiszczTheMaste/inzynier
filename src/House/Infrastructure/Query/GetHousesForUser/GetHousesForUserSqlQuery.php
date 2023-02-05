@@ -12,6 +12,9 @@ use App\House\Application\Query\GetHousesForUserQueryInterface;
 use App\House\Application\UseCase\GetHousesForUser\DTO\HouseDTO;
 use App\House\Application\UseCase\GetHousesForUser\DTO\HouseDTOCollection;
 
+/**
+ *
+ */
 final class GetHousesForUserSqlQuery extends AbstractSqlQuery implements GetHousesForUserQueryInterface
 {
     /**

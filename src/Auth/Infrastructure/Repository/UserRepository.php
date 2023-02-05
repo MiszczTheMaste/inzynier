@@ -17,6 +17,9 @@ use App\Core\Infrastructure\Repository\AbstractEventSQLRepository;
 use DateTimeImmutable;
 use Exception;
 
+/**
+ *
+ */
 final class UserRepository extends AbstractEventSQLRepository implements UserRepositoryInterface
 {
     /**

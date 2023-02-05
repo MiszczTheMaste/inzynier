@@ -14,6 +14,9 @@ use App\Core\Domain\ValueObject\Uuid;
 use App\House\Domain\Exception\RoomNotFoundException;
 use App\House\Domain\Repository\HouseRepositoryInterface;
 
+/**
+ *
+ */
 final class CreateRoomService implements CreateRoomServiceInterface
 {
     /**

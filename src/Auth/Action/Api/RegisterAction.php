@@ -13,15 +13,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class RegisterAction
 {
     private RegisterServiceInterface $service;
 
+    /**
+     * @param RegisterServiceInterface $service
+     */
     public function __construct(RegisterServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         try {

@@ -6,6 +6,9 @@ namespace App\Auth\Domain\ValueObject;
 
 use App\Auth\Domain\Exception\InvalidUsernameException;
 
+/**
+ *
+ */
 final class Username
 {
     private const MIN_LENGTH = 3;
@@ -33,6 +36,9 @@ final class Username
         }
     }
 
+    /**
+     * @return string
+     */
     public function toString(): string
     {
         return $this->value;

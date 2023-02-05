@@ -12,15 +12,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 final class GetUsersInHouseAction
 {
     private GetUsersInHouseServiceInterface $service;
 
+    /**
+     * @param GetUsersInHouseServiceInterface $service
+     */
     public function __construct(GetUsersInHouseServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function __invoke(Request $request): Response
     {
         try {

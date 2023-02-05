@@ -7,6 +7,9 @@ namespace App\Core\Domain\Event;
 use App\Core\Domain\Exception\InvalidObjectTypeInCollectionException;
 use App\Core\Domain\ValueObject\AbstractCollection;
 
+/**
+ *
+ */
 final class EventHandlerCollection extends AbstractCollection
 {
     /**
@@ -28,11 +31,18 @@ final class EventHandlerCollection extends AbstractCollection
         $this->collection[$eventNamespace] = new EventHandler($eventNamespace, $handlerFunction);
     }
 
+    /**
+     * @param string $eventNamespace
+     * @return EventHandler
+     */
     public function getItem(string $eventNamespace): EventHandler
     {
         return $this->collection[$eventNamespace];
     }
 
+    /**
+     * @return string
+     */
     protected function getCollectionClass(): string
     {
         return EventHandler::class;

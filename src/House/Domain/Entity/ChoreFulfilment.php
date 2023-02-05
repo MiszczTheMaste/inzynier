@@ -9,6 +9,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\ValueObject\Rate;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class ChoreFulfilment extends AbstractEntity
 {
     private DateTimeImmutable $deadline;
@@ -51,6 +54,9 @@ final class ChoreFulfilment extends AbstractEntity
         return $this->finished;
     }
 
+    /**
+     * @return void
+     */
     public function finish(): void
     {
         $this->finished = true;
@@ -62,5 +68,14 @@ final class ChoreFulfilment extends AbstractEntity
     public function getRate(): Rate
     {
         return $this->rate;
+    }
+
+    /**
+     * @param Rate $rate
+     * @return void
+     */
+    public function changeRateTo(Rate $rate): void
+    {
+        $this->rate = $rate;
     }
 }

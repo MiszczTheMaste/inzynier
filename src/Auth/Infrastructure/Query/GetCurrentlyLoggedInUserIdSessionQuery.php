@@ -7,6 +7,9 @@ namespace App\Auth\Infrastructure\Query;
 use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ *
+ */
 final class GetCurrentlyLoggedInUserIdSessionQuery implements GetCurrentlyLoggedInUserIdQueryInterface
 {
     private RequestStack $requestStack;

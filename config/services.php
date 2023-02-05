@@ -44,6 +44,7 @@ use App\House\Action\AddUserToHouse\AddUserToHouseAction;
 use App\House\Action\CreateChore\CreateChoreAction;
 use App\House\Action\CreateHouse\CreateHouseAction;
 use App\House\Action\CreateRoom\CreateRoomAction;
+use App\House\Action\EditFulfilment\EditFulfilmentAction;
 use App\House\Action\GetChore\GetChoreAction;
 use App\House\Action\GetRoom\GetRoomAction;
 use App\House\Action\GetHouse\GetHouseAction;
@@ -63,6 +64,8 @@ use App\House\Application\UseCase\CreateHouse\CreateHouseService;
 use App\House\Application\UseCase\CreateHouse\CreateHouseServiceInterface;
 use App\House\Application\UseCase\CreateRoom\CreateRoomService;
 use App\House\Application\UseCase\CreateRoom\CreateRoomServiceInterface;
+use App\House\Application\UseCase\EditFulfilment\EditFulfilmentService;
+use App\House\Application\UseCase\EditFulfilment\EditFulfilmentServiceInterface;
 use App\House\Application\UseCase\GetChore\GetChoreService;
 use App\House\Application\UseCase\GetChore\GetChoreServiceInterface;
 use App\House\Application\UseCase\GetChore\Query\GetChoreQueryInterface;
@@ -430,5 +433,16 @@ return static function (ContainerConfigurator $configurator) {
     $services->set(GetUsersInHouseQueryInterface::class, GetUsersInHouseSqlQuery::class)
         ->args([
             service(DatabaseAbstractionLayerInterface::class)
+        ]);
+
+    $services->set(EditFulfilmentServiceInterface::class, EditFulfilmentService::class)
+        ->args([
+            service(HouseRepositoryInterface::class)
+        ]);
+
+    $services->set(EditFulfilmentAction::class)
+        ->tag('controller.service_arguments')
+        ->args([
+            service(EditFulfilmentServiceInterface::class)
         ]);
 };

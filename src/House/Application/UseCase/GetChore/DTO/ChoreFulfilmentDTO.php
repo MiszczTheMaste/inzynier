@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\House\Application\UseCase\GetChore\DTO;
 
+/**
+ *
+ */
 final class ChoreFulfilmentDTO
 {
     private string $id;

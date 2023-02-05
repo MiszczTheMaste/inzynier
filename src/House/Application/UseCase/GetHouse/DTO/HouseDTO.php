@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\GetHouse\DTO;
 
 use App\House\Application\DTO\UserDTOCollection;
 
+/**
+ *
+ */
 final class HouseDTO
 {
     private string $id;
@@ -62,6 +65,9 @@ final class HouseDTO
         return $this->rooms;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [

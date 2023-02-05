@@ -7,9 +7,13 @@ namespace App\House\Application\UseCase\GetChore;
 use App\Auth\Application\Query\GetCurrentlyLoggedInUserIdQueryInterface;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use App\Core\Domain\Exception\DatabaseException;
 use App\House\Application\Query\GetRoomNameQueryInterface;
 use App\House\Application\UseCase\GetChore\Query\GetChoreQueryInterface;
 
+/**
+ *
+ */
 final class GetChoreService implements GetChoreServiceInterface
 {
     private GetChoreQueryInterface $getChoreQuery;
@@ -30,6 +34,9 @@ final class GetChoreService implements GetChoreServiceInterface
         $this->getCurrentlyLoggedInUserIdQuery = $getCurrentlyLoggedInUserIdQuery;
     }
 
+    /**
+     * @throws DatabaseException
+     */
     public function handle(GetChoreRequest $request): UseCasePayload
     {
         return new UseCasePayload(

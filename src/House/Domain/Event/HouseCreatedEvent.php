@@ -9,6 +9,9 @@ use App\Core\Domain\ValueObject\IdInterface;
 use App\House\Domain\ValueObject\UserIdCollection;
 use DateTimeImmutable;
 
+/**
+ *
+ */
 final class HouseCreatedEvent implements EventInterface
 {
     private IdInterface $id;

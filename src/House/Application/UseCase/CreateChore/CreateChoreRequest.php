@@ -6,6 +6,9 @@ namespace App\House\Application\UseCase\CreateChore;
 
 use App\Core\Application\UseCase\AbstractArrayRequest;
 
+/**
+ *
+ */
 final class CreateChoreRequest extends AbstractArrayRequest
 {
     private string $houseId;

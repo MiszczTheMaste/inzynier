@@ -9,6 +9,9 @@ use App\Core\Domain\Exception\ItemNotFoundInCollectionException;
 use App\Core\Infrastructure\Query\AbstractSqlQuery;
 use App\House\Application\Query\GetUsernameByIdQueryInterface;
 
+/**
+ *
+ */
 final class GetUsernameByIdQuery extends AbstractSqlQuery implements GetUsernameByIdQueryInterface
 {
     /**

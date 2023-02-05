@@ -11,6 +11,9 @@ use App\Core\Domain\Exception\DatabaseException;
 use App\House\Application\Query\GetHousesForUserQueryInterface;
 use App\House\Application\Query\GetUsernameByIdQueryInterface;
 
+/**
+ *
+ */
 final class GetHousesForUserService implements GetHousesForUserServiceInterface
 {
     private GetCurrentlyLoggedInUserIdQueryInterface $getCurrentlyLoggedInUserIdQuery;

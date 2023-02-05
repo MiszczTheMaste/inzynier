@@ -17,6 +17,9 @@ use App\House\Domain\Repository\HouseRepositoryInterface;
 use App\House\Domain\ValueObject\RoomCollection;
 use App\House\Domain\ValueObject\UserIdCollection;
 
+/**
+ *
+ */
 final class CreateHouseService implements CreateHouseServiceInterface
 {
     private HouseRepositoryInterface $repository;

@@ -8,6 +8,9 @@ use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
 use App\House\Application\UseCase\GetUsersInHouse\Query\GetUsersInHouseQueryInterface;
 
+/**
+ *
+ */
 final class GetUsersInHouseService implements GetUsersInHouseServiceInterface
 {
     private GetUsersInHouseQueryInterface $getUsersInHouseQuery;
@@ -20,6 +23,10 @@ final class GetUsersInHouseService implements GetUsersInHouseServiceInterface
         $this->getUsersInHouseQuery = $getUsersInHouseQuery;
     }
 
+    /**
+     * @param GetUsersInHouseRequest $request
+     * @return UseCasePayload
+     */
     public function handle(GetUsersInHouseRequest $request): UseCasePayload
     {
         return new UseCasePayload(
