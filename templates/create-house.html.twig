@@ -119,7 +119,7 @@
         <form method="post" action="/api/houses.form">
             <section>
                 <label for="name">Nazwa</label>
-                <input type="text" name="name">
+                <input type="text" minlength="1" required name="name">
             </section>
             <input type="submit" value="Dodaj" class="login-button">
             <section style="display: none">

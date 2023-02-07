@@ -9,20 +9,20 @@ namespace App\Core\Domain\ValueObject;
  */
 final class DbField
 {
-    private string $value;
+    private mixed $value;
 
     /**
-     * @param string $value
+     * @param mixed $value
      */
-    public function __construct(string $value)
+    public function __construct(mixed $value)
     {
         $this->value = $value;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getValue(): string
+    public function getValue(): mixed
     {
         return $this->value;
     }

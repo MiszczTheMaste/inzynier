@@ -127,7 +127,7 @@
         <form method="post" action="/api/houses/{{ house.id }}/users.form">
             <section>
                 <label for="username">Nazwa</label>
-                <input type="text" name="username">
+                <input type="text" minlength="1" required name="username">
             </section>
             <input type="submit" value="Dodaj" class="login-button">
             <section style="display: none">

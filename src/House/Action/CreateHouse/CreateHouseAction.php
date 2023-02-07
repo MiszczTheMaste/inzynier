@@ -33,7 +33,7 @@ final class CreateHouseAction
      */
     public function __invoke(Request $request): Response
     {
-        try {
+       try {
             if ('json' === $request->get('format')) {
                 $data = json_decode((string) $request->getContent(), true);
             } else {

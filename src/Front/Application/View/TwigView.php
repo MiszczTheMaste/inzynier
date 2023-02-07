@@ -36,7 +36,6 @@ final class TwigView
         try {
             return $this->twig->render($name . '.html.twig', $context);
         } catch (Exception $e) {
-            dump($e);
             return $this->twig->render('base.html.twig', $context);
         }
     }

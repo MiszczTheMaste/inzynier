@@ -101,11 +101,11 @@
             <form method="post" action="/api/register.form">
                 <section>
                     <label for="username">Login</label>
-                    <input type="text" name="username">
+                    <input type="text" minlength="1" required name="username">
                 </section>
                 <section>
                     <label for="password">Hasło</label>
-                    <input type="password" name="password">
+                    <input type="password" minlength="1" required name="password">
                 </section>
                     <input type="submit" value="Zarejestruj" class="register-button">
             </form>
