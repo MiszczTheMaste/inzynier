@@ -38,7 +38,7 @@ final class LoginAction
     {
         try {
             if ('json' === $request->get('format')) {
-                $data = json_decode((string) $request->getContent(), true);
+                $data = json_decode((string)$request->getContent(), true);
             } else {
                 $data = [
                     'username' => $request->get('username'),
@@ -60,26 +60,16 @@ final class LoginAction
             }
 
             return new RedirectResponse('/');
-        } catch (DatabaseException) {
-            return new JsonResponse(
-                ['message' => 'Error during connection.'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        } catch (InvalidUsernameException) {
-            return new JsonResponse(
-                ['message' => 'Nie poprawny login'],
-                Response::HTTP_BAD_REQUEST
-            );
-        } catch (InvalidPasswordException) {
-            return new JsonResponse(
-                ['message' => 'Niewłaściwe hasło'],
-                Response::HTTP_BAD_REQUEST
-            );
         } catch (Exception) {
-            return new JsonResponse(
-                ['message' => 'Unknown error has occurred'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Nie udało się zalogować sprawdź login lub hasło.'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            $request->getSession()->getFlashBag()->add('error', 'Nie udało się zalogować sprawdź login lub hasło.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }
 }

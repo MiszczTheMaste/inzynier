@@ -6,6 +6,7 @@ namespace App\Auth\Action\Api;
 
 use App\Auth\Application\UseCase\Register\RegisterRequest;
 use App\Auth\Application\UseCase\Register\RegisterServiceInterface;
+use App\Auth\Domain\Exception\UserExistsException;
 use App\Core\Domain\Exception\DatabaseException;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +37,7 @@ final class RegisterAction
     {
         try {
             if ('json' === $request->get('format')) {
-                $data = json_decode((string) $request->getContent(), true);
+                $data = json_decode((string)$request->getContent(), true);
             } else {
                 $data = [
                     'username' => $request->get('username'),
@@ -57,17 +58,28 @@ final class RegisterAction
                 );
             }
 
+            $request->getSession()->getFlashBag()->add('info', 'Zarejestrowano.');
             return new RedirectResponse('/');
-        } catch (DatabaseException) {
-            return new JsonResponse(
-                ['message' => 'Error during saving user'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+        } catch (UserExistsException) {
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Nazwa użytkownika jest zajęta.'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            $request->getSession()->getFlashBag()->add('error', 'Nazwa użytkownika jest zajęta.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         } catch (Exception) {
-            return new JsonResponse(
-                ['message' => 'Unknown error has occurred'],
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            if ('json' === $request->get('format')) {
+                return new JsonResponse(
+                    ['message' => 'Nie udało się zarejestrować.'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            $request->getSession()->getFlashBag()->add('error', 'Nie udało się zarejestrować.');
+            return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }
 }

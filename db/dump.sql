@@ -21,7 +21,7 @@ CREATE TABLE `chores_fulfilments` (
                                       `chore_id` char(36) COLLATE utf8_polish_ci NOT NULL,
                                       `rate` tinyint(126) UNSIGNED NOT NULL,
                                       `finished` tinyint(1) NOT NULL DEFAULT 0,
-                                      `deadline` timestamp NOT NULL DEFAULT current_timestamp()
+                                      `deadline` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 CREATE TABLE `houses` (

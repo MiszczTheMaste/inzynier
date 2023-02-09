@@ -107,7 +107,7 @@ return static function (ContainerConfigurator $configurator) {
         ->set('db_host', '127.0.0.1')
         ->set('db_port', '3306')
         ->set('db_name', 'app')
-        ->set('db_user', 'app')
+        ->set('db_user', 'App')
         ->set('db_pwd', 'app123');
 
     $services->set(DatabaseAbstractionLayerInterface::class, \App\Core\Infrastructure\DBAL\PDO::class)

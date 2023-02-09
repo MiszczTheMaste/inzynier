@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1">
     <title>{% block title %}Elemele{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -16,10 +17,11 @@
                 background-color: #0f0f0f;
                 color: #ffffff;
                 font-family: Arial, sans-serif;
+                overflow: hidden;
             }
             main {
                 width: 100vw;
-                height: 100vh;
+                height: 100%;
                 top: 0;
                 position: absolute;
             }
@@ -32,9 +34,9 @@
                 color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 80px;
-                margin-top: 75px;
-                margin-bottom: 200px;
+                font-size: 30px;
+                margin-top: 35px;
+                margin-bottom: 75px;
             }
             a {
                 display: block;
@@ -48,20 +50,20 @@
                 display: block;
                 width: 100%;
                 text-align: center;
-                font-size: 48px;
+                font-size: 22px;
             }
             section input {
                 width: 100%;
                 border: none;
-                height: 80px;
-                margin-bottom: 200px;
-                font-size: 72px;
+                height: 30px;
+                margin-bottom: 70px;
+                font-size: 25px;
             }
             .register-button{
                 background-color: #273927;
                 width: 100%;
-                height: 300px;
-                font-size: 48px;
+                height: 150px;
+                font-size: 22px;
                 color: #fff;
                 border: none;
                 position: absolute;
@@ -86,6 +88,12 @@
             function hide(elem){
                 elem.style.display = 'none';
             }
+            addEventListener("load", function() {
+                let viewport = document.querySelector("meta[name=viewport]");
+                viewport.setAttribute("content", viewport.content + ", height=" + window.outerHeight);
+                let main = document.querySelector('main');
+                main.style.height = window.outerHeight + 'px';
+            })
         </script>
     {% endblock %}
 </head>
@@ -101,11 +109,11 @@
             <form method="post" action="/api/register.form">
                 <section>
                     <label for="username">Login</label>
-                    <input type="text" minlength="1" required name="username">
+                    <input type="text" minlength="1" maxlength="60" required name="username">
                 </section>
                 <section>
                     <label for="password">Hasło</label>
-                    <input type="password" minlength="1" required name="password">
+                    <input type="password" minlength="1" maxlength="60" required name="password">
                 </section>
                     <input type="submit" value="Zarejestruj" class="register-button">
             </form>

@@ -51,20 +51,19 @@ final class UserRepository extends AbstractEventSQLRepository implements UserRep
      */
     public function get(Username $username): User
     {
-        $result = $this->fetch(
-            '
-            SELECT 
+        try {
+            $result = $this->fetch(
+                'SELECT 
                 id, username, password, creation_date, removed
             FROM
                 users
             WHERE 
                 username = :username AND removed = false',
-            [
-                ':username' => $username->toString()
-            ]
-        );
+                [
+                    ':username' => $username->toString()
+                ]
+            );
 
-        try {
             return new User(
                 Uuid::fromString($result->getFieldValue('id')),
                 new Username($result->getFieldValue('username')),
@@ -83,8 +82,7 @@ final class UserRepository extends AbstractEventSQLRepository implements UserRep
     protected function handleUserCreatedEvent(UserCreatedEvent $event)
     {
         $this->execute(
-            '
-            INSERT INTO users 
+            'INSERT INTO users 
                 (id, username, password, creation_date, removed)
             VALUES 
                 (:id, :username, :password, :creation_date, false)',

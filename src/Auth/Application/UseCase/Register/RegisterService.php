@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Auth\Application\UseCase\Register;
 
 use App\Auth\Domain\Entity\User;
+use App\Auth\Domain\Exception\UserExistsException;
 use App\Auth\Domain\Repository\UserRepositoryInterface;
 use App\Auth\Domain\ValueObject\PasswordHash;
 use App\Auth\Domain\ValueObject\Username;
 use App\Core\Application\Http\HttpCodes;
 use App\Core\Application\UseCase\UseCasePayload;
+use Exception;
 
 /**
  *
@@ -31,6 +33,16 @@ final class RegisterService implements RegisterServiceInterface
      */
     public function handle(RegisterRequest $request): UseCasePayload
     {
+        try {
+            $user = $this->repository->get(new Username((string) $request->getField('username')));
+        } catch (Exception){
+
+        }
+
+        if(false === empty($user)){
+            throw new UserExistsException();
+        }
+        
         $user = new User(
             $this->repository->generateId(),
             new Username((string) $request->getField('username')),

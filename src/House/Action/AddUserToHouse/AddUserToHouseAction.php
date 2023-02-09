@@ -68,7 +68,7 @@ final class AddUserToHouseAction
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
-            $request->getSession()->getFlashBag()->add('error', 'Nie udało się dodać lokatora.');
+            $request->getSession()->getFlashBag()->add('error', 'Nie znaleziono użytkownika.');
             return new RedirectResponse($request->get('redirect_address') ?? '/');
         }
     }

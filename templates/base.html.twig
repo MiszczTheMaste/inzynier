@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1">
     <title>{% block title %}Elemele{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {% block stylesheets %}
@@ -15,27 +16,34 @@
                 background-color: #0f0f0f;
                 color: #ffffff;
                 font-family: Arial, sans-serif;
+                overflow: hidden;
             }
-            main{
+            main {
                 width: 100vw;
-                height: 100vh;
+                height: 100%;
                 top: 0;
                 position: absolute;
             }
-            h1{
+            section{
+                display: flex;
+                flex-wrap: wrap;
+                width: 100vw;
+            }
+            h1 {
                 color: #ffffff;
                 font-family: Impact, sans-serif;
                 text-align: center;
-                font-size: 80px;
-                margin-top: 75px;
+                font-size: 30px;
+                margin-top: 35px;
+                margin-bottom: 75px;
             }
-            a{
+            a {
                 display: block;
                 color: #ffffff;
                 text-decoration: none;
                 text-align: center;
-                font-size: 48px;
-                height: 300px;
+                font-size: 22px;
+                height: 110px;
             }
             .login-parent{
                 background-color: #273927;
@@ -43,7 +51,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-top: 200px;
+                margin-top: 80px;
             }
             .register-parent{
                 background-color: #272727;
@@ -51,16 +59,26 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-top: 100px;
+                margin-top: 50px;
             }
             .flash-notice{
                 position: absolute;
                 color: #ff9999;
-                font-size: 72px;
+                font-size: 25px;
                 text-align: center;
                 width: 100%;
-                padding-top: 75px;
-                padding-bottom: 75px;
+                height: 100%;
+                padding-top: 50%;
+                background-color: #0a0a0a99;
+            }
+            .flash-notice-info{
+                position: absolute;
+                color: #99ff99;
+                font-size: 25px;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                padding-top: 50%;
                 background-color: #0a0a0a99;
             }
         </style>
@@ -72,6 +90,12 @@
             function hide(elem){
                 elem.style.display = 'none';
             }
+            addEventListener("load", function() {
+                let viewport = document.querySelector("meta[name=viewport]");
+                viewport.setAttribute("content", viewport.content + ", height=" + window.outerHeight);
+                let main = document.querySelector('main');
+                main.style.height = window.outerHeight + 'px';
+            })
         </script>
     {% endblock %}
 </head>
@@ -80,6 +104,11 @@
     <main>
         {% for message in app.flashes('error') %}
             <div class="flash-notice" onclick="hide(this)">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('info') %}
+            <div class="flash-notice-info" onclick="hide(this)">
                 {{ message }}
             </div>
         {% endfor %}
